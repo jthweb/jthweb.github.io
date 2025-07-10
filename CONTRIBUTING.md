@@ -38,7 +38,7 @@ Thanks for showing interest in contributing to JThweb's Profile! Whether you're 
    ```
 6. **Open a Pull Request**
 
----
+----
 
 ## ✅ Code Guidelines
 
