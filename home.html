@@ -26,6 +26,18 @@
     <meta property="og:title" content="JThweb">
     <meta name="theme-color" content="#2B2D31">
     <link rel="icon" type="image/gif" href="index_files/logo.gif">
+    <script language=javascript>
+    msg = "JThweb Profile  ";
+
+    msg = "  " + msg;pos = 0;
+    function scrollMSG() {
+    document.title = msg.substring(pos, msg.length) + msg.substring(0, pos);
+    pos++;
+    if (pos >  msg.length) pos = 0
+    window.setTimeout("scrollMSG()",100);
+    }
+    scrollMSG();
+    </script>
     <title>JThweb Profile</title>
     <link rel="stylesheet" href="index_files/style.css">
     <style>
