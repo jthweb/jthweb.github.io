@@ -1,3 +1,17 @@
+//
+// THIS IS THE JAVASCRIPT CODE FILE FOR JTHWEB'S PROFILE {INDEX.HTML}
+// https://jthweb.github.io - WEBSITE
+// https://github.com/jthweb/jthweb.github.io - SOURCE CODE
+//
+// LICENSED USING THE APACHE LICENSE 2.0
+// REPORUDCTION IS PERMITTED AS LONG AS THE CODE CREATOR IS MENTIONED
+// HERE, JTHWEB
+//
+// DON'T FORGET TO STAR THE REPOSITORY IF YOU LIKED THE WEBSITE
+//
+// CHECK OUT MY OTHER PROJECTS AT https://github.com/jthweb
+//
+
 const captcha = document.querySelector(".captcha"),
 reloadBtn = document.querySelector(".reload-btn"),
 inputField = document.querySelector(".input-area input"),
