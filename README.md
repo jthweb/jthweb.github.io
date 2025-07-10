@@ -2,7 +2,7 @@
 
 ---
 
-Hey there! I'm JThweb, a high school student who loves to tinker with tech.
+Hey there! I'm Jonathan, a high school student who loves to tinker with tech.
 
 This is my personal portfolio website.
 
