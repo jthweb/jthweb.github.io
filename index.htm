@@ -382,7 +382,7 @@
                         <button onclick="handleFollow()" class="font-medium text-gray-500 hover:text-[var(--primary)] transition flex items-center">
                             <i class="fab fa-github mr-2"></i> Follow
                         </button>
-                        <a href="https://ko-fi.com/jthweb" target="_blank" rel="noopener noreferrer" class="font-medium text-gray-500 hover:text-[var(--primary)] transition flex items-center">
+                        <a href="https://ko-fi.com/jthweb" target="_blank" rel="noopener noreferrer" class="font-medium text-gray-500 hover:text-[var(--primary)] transition flex items-center justify-center">
                             <i class="far fa-heart mr-2"></i> Sponsor
                         </a>
                     </nav>
@@ -444,7 +444,7 @@
                     <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4 mt-8">
                         <a href="#contact" class="px-6 py-3 rounded-lg font-semibold animated-button secondary">Get in Touch</a>
                         <button onclick="handleFollowAndStarAll()" class="px-6 py-3 rounded-lg font-semibold animated-button primary">
-                            <i class="fas fa-star mr-2"></i> Follow & Star All Projects
+                            <i class="fas fa-star mr-2"></i> Follow me & Star All ⭐
                         </button>
                     </div>
                 </div>
@@ -564,9 +564,14 @@
 
             <!-- Projects Section -->
             <section id="projects" class="my-24 scroll-mt-16 opacity-0">
-                <h2 class="text-3xl font-bold text-center mb-12">My Projects</h2>
-                <div id="projects-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- GitHub projects will be dynamically inserted here -->
+                <div class="section-card max-w-7xl mx-auto">
+                    <h2 class="text-3xl font-bold text-center mb-4">Featured Projects</h2>
+                    <p id="project-count-display" class="text-center text-lg" style="color: var(--text-secondary);">
+                        Showing 8 of <span id="total-repo-count" class="font-semibold">--</span> repositories.
+                    </p>
+                    <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-8">
+                        <!-- Projects will be dynamically inserted here -->
+                    </div>
                 </div>
             </section>
 
@@ -582,582 +587,217 @@
             </section>
         </main>
 
-        <footer class="py-8" style="background-color: var(--bg-secondary); border-top: 1px solid var(--border-color);">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center text-[var(--text-secondary)]">
-                <div class="flex justify-center space-x-6 mb-4">
-                    <a href="https://github.com/JThweb" target="_blank" rel="noopener noreferrer" class="text-2xl hover:text-[var(--primary)] transition" aria-label="GitHub Profile"><i class="fab fa-github"></i></a>
-                    <a href="https://discordapp.com/users/jthweb" target="_blank" rel="noopener noreferrer" class="text-2xl hover:text-[var(--primary)] transition" title="@JThweb" aria-label="Discord Profile"><i class="fab fa-discord"></i></a>
-                    <a href="https://ko-fi.com/jthweb" target="_blank" rel="noopener noreferrer" class="text-2xl hover:text-[var(--primary)] transition" title="Support me on Ko-fi" aria-label="Sponsor on Ko-fi"><i class="far fa-heart"></i></a>
-                </div>
-                <p>&copy; 2025 JThweb. All Rights Reserved.</p>
-                <p class="text-xs mt-2">This site is <span class="font-bold">Copyleft</span>. Feel free to inspect and adapt the code!</p>
-            </div>
+        <footer class="text-center py-8" style="color: var(--text-secondary);">
+            <p>&copy; 2024 JThweb. All Rights Reserved.</p>
+            <p>Built with <i class="fas fa-heart text-red-500"></i> and a lot of <i class="fas fa-coffee"></i></p>
         </footer>
-    </div> <!-- End of #main-content -->
+    </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const themeToggle = document.getElementById('theme-toggle');
+        // --- GitHub OAuth Configuration ---
+        // IMPORTANT: Replace with your actual GitHub OAuth App Client ID
+        const GITHUB_CLIENT_ID = 'YOUR_CLIENT_ID'; // TODO: Replace with your Client ID
+        const GITHUB_USERNAME = 'jthweb';
+        const REDIRECT_URI = `${window.location.origin}/callback.html`;
+
+        // --- Authentication Handlers ---
+        function redirectToGitHub(scope, action, repo = null) {
+            localStorage.setItem('github_action', action);
+            if (repo) {
+                localStorage.setItem('github_repo', repo);
+            } else {
+                localStorage.removeItem('github_repo');
+            }
+            const authUrl = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${scope}&login=${GITHUB_USERNAME}`;
+            window.location.href = authUrl;
+        }
+
+        function handleFollow() {
+            redirectToGitHub('user:follow', 'follow');
+        }
+
+        function handleStar(repoName) {
+            redirectToGitHub('public_repo', 'star', repoName);
+        }
+
+        function handleFollowAndStarAll() {
+            redirectToGitHub('user:follow,public_repo', 'follow_and_star_all');
+        }
+
+        // --- Theme Toggle ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        // On page load, check saved theme
+        if (localStorage.getItem('theme') === 'dark') {
+            html.classList.add('dark');
+            themeToggle.checked = true;
+        } else {
+            html.classList.remove('dark');
+            themeToggle.checked = false;
+        }
+
+        // Toggle theme on click
+        themeToggle.addEventListener('change', () => {
+            if (themeToggle.checked) {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // --- Mobile Menu ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // --- Animate on Scroll ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in');
+                    entry.target.classList.remove('opacity-0');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.opacity-0').forEach(el => observer.observe(el));
+
+        // --- GitHub API Fetch ---
+        async function fetchGitHubData() {
+            try {
+                const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=100`);
+                if (!response.ok) throw new Error('Network response was not ok.');
+                const repos = await response.json();
+
+                // Filter out forked repos
+                const originalRepos = repos.filter(repo => !repo.fork);
+
+                // Calculate total stars
+                const totalStars = originalRepos.reduce((acc, repo) => acc + repo.stargazers_count, 0);
+                document.getElementById('total-stars').textContent = `${totalStars} Stars`;
+
+                // Display total project count
+                const totalProjects = originalRepos.length;
+                document.getElementById('total-projects').textContent = `${totalProjects} Projects`;
+                document.getElementById('total-repo-count').textContent = totalProjects;
+
+
+                // Populate projects grid
+                const projectsGrid = document.getElementById('projects-grid');
+                projectsGrid.innerHTML = ''; // Clear existing
+                const featuredRepos = originalRepos.slice(0, 8); // Show 8 projects
+
+                featuredRepos.forEach(repo => {
+                    const projectCard = `
+                        <div class="section-card flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">${repo.name}</h3>
+                                <p class="text-sm mb-4" style="color: var(--text-secondary);">${repo.description || 'No description available.'}</p>
+                            </div>
+                            <div class="mt-4 flex items-center justify-between">
+                                <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold hover:text-[var(--primary)]">View on GitHub &rarr;</a>
+                                <button onclick="handleStar('${repo.full_name}')" class="px-4 py-2 rounded-lg font-semibold animated-button secondary text-sm">
+                                    <i class="fas fa-star mr-1"></i> Star
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    projectsGrid.innerHTML += projectCard;
+                });
+
+            } catch (error) {
+                console.error("Failed to fetch GitHub data:", error);
+                // Fallback text
+                document.getElementById('total-stars').textContent = 'N/A';
+                document.getElementById('total-projects').textContent = 'N/A';
+                document.getElementById('projects-grid').innerHTML = '<p>Could not load projects.</p>';
+            }
+        }
+
+
+        // --- Intro Loader & Content Fade-in ---
+        window.addEventListener('load', () => {
             const introLoader = document.getElementById('intro-loader');
             const mainContent = document.getElementById('main-content');
-            const customCursor = document.getElementById('custom-cursor');
+            const bgCanvas = document.getElementById('bg-canvas');
 
-            // --- Custom Cursor Logic ---
-            if (customCursor) {
-                document.addEventListener('mousemove', (e) => {
-                    customCursor.style.left = `${e.clientX}px`;
-                    customCursor.style.top = `${e.clientY}px`;
+            // Fetch data while loader is showing
+            fetchGitHubData();
+
+            // Set a minimum time for the loader to be visible
+            setTimeout(() => {
+                introLoader.classList.add('fade-out');
+                mainContent.classList.add('show');
+                bgCanvas.style.opacity = '1'; // Fade in canvas
+
+                // Animate progress bars after content is visible
+                document.querySelectorAll('.progress-bar').forEach(bar => {
+                    bar.style.width = bar.getAttribute('style').match(/width:\s*(\d+)%/)[0];
                 });
+
+            }, 1500); // Minimum 1.5 seconds
+        });
+
+        // --- Custom Cursor ---
+        const cursor = document.getElementById('custom-cursor');
+        document.addEventListener('mousemove', e => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // --- 3D Background Animation (three.js) ---
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg-canvas'), alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        const particles = new THREE.BufferGeometry();
+        const particleCount = 5000;
+        const posArray = new Float32Array(particleCount * 3);
+
+        for (let i = 0; i < particleCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * (Math.random() * 5);
+        }
+
+        particles.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        const material = new THREE.PointsMaterial({ size: 0.005, color: 0x0078d4 });
+        const particleMesh = new THREE.Points(particles, material);
+        scene.add(particleMesh);
+
+        camera.position.z = 1.5;
+
+        let mouseX = 0;
+        let mouseY = 0;
+        document.addEventListener('mousemove', (event) => {
+            mouseX = event.clientX;
+            mouseY = event.clientY;
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            particleMesh.rotation.y += 0.0001;
+            particleMesh.rotation.x += 0.0001;
+
+            if (mouseX > 0) {
+                particleMesh.rotation.y += (mouseX - window.innerWidth / 2) * 0.000005;
+                particleMesh.rotation.x += (mouseY - window.innerHeight / 2) * 0.000005;
             }
 
-            // --- Mobile Menu Toggle ---
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-
-            // --- Theme Management ---
-            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-
-            function applyTheme(isDark) {
-                const root = document.documentElement;
-                console.log('Applying theme. Is dark:', isDark); // Debugging log
-                if (isDark) {
-                    root.classList.add('dark');
-                    themeToggle.checked = true;
-                } else {
-                    root.classList.remove('dark');
-                    themeToggle.checked = false;
-                }
-                console.log('HTML classes after theme apply:', root.classList); // Debugging log
-
-                // Update 3D background theme
-                if (window.update3DTheme) {
-                    window.update3DTheme(isDark);
-                }
-                // Update GitHub stats theme
-                updateGitHubStatsTheme(isDark);
-            }
-
-            // Initial Theme Setup
-            const storedTheme = localStorage.getItem('theme');
-            let initialIsDark;
-            if (storedTheme) {
-                initialIsDark = storedTheme === 'dark';
-            } else {
-                initialIsDark = systemPrefersDark.matches;
-            }
-            console.log('Initial theme determined. Stored:', storedTheme, 'System Prefers Dark:', systemPrefersDark.matches, 'Final initialIsDark:', initialIsDark); // Debugging log
-            applyTheme(initialIsDark);
-
-            themeToggle.addEventListener('change', (e) => {
-                const newTheme = e.target.checked ? 'dark' : 'light';
-                console.log('Theme toggle changed to:', newTheme); // Debugging log
-                localStorage.setItem('theme', newTheme); // Ensure this is explicitly set
-                applyTheme(newTheme === 'dark');
-            });
-
-            systemPrefersDark.addEventListener('change', e => {
-                console.log('System prefers dark media query changed. Matches:', e.matches); // Debugging log
-                // Only apply system preference if no theme is explicitly set by the user
-                if (!localStorage.getItem('theme')) {
-                    applyTheme(e.matches);
-                }
-            });
-
-            // --- GitHub Stats & Top Languages ---
-            function updateGitHubStatsTheme(isDark) {
-                const statsCard = document.getElementById('github-stats-card');
-                const contributions = document.getElementById('github-contributions');
-                const topLangs = document.getElementById('github-top-langs');
-                const streakStats = document.getElementById('github-streak-stats');
-
-                const themeName = isDark ? 'transparent' : 'default';
-                const textColor = isDark ? 'f5f5f5' : '242424';
-                const bgColor = isDark ? '1e1e1e' : 'f5f5f5';
-                const borderColor = isDark ? '333333' : 'e1e1e1';
-                const streakTheme = isDark ? 'dark' : 'light'; // Streak stats uses a different theme parameter
-
-                if (statsCard) {
-                    statsCard.src = `https://github-readme-stats.vercel.app/api?username=JThweb&show_icons=true&theme=${themeName}&text_color=${textColor}&bg_color=${bgColor}&border_color=${borderColor}&hide_border=false&border_radius=8`;
-                }
-                if (contributions) {
-                    contributions.src = `https://raw.githubusercontent.com/JThweb/JThweb/output/github-contribution-grid-snake.svg`;
-                }
-                if (topLangs) {
-                    topLangs.src = `https://github-readme-stats.vercel.app/api/top-langs/?username=JThweb&layout=compact&theme=${themeName}&text_color=${textColor}&bg_color=${bgColor}&border_color=${borderColor}&hide_border=false&border_radius=8`;
-                }
-                if (streakStats) { // Update GitHub Streak Stats
-                    streakStats.src = `https://github-readme-streak-stats.herokuapp.com/?user=JThweb&theme=${streakTheme}&hide_border=true&border_radius=8`;
-                }
-            }
-
-            // --- GitHub API and Project Loading ---
-            const GITHUB_USERNAME = 'JThweb';
-            const OAUTH_CLIENT_ID = 'Ov23liSLmQfrm4aBKuMk'; // Replace with your GitHub OAuth App Client ID
-            // IMPORTANT: Update this to the full URL of your callback.html file
-            const OAUTH_REDIRECT_URI = 'http://jthweb.github.io/callback.html';
-
-            // Function to get the stored GitHub token
-            function getGitHubToken() {
-                return localStorage.getItem('github_token');
-            }
-
-            // Function to store the GitHub token
-            function setGitHubToken(token) {
-                localStorage.setItem('github_token', token);
-            }
-
-            // Function to handle GitHub OAuth login, storing the intended action
-            function loginToGitHub(action, repoFullName = null) {
-                const state = { action };
-                if (repoFullName) {
-                    state.repo = repoFullName;
-                }
-                // Store the intended action in sessionStorage to retrieve after OAuth redirect
-                sessionStorage.setItem('github_action', JSON.stringify(state));
-
-                const authUrl = `https://github.com/login/oauth/authorize?client_id=${OAUTH_CLIENT_ID}&scope=public_repo,user:follow&redirect_uri=${OAUTH_REDIRECT_URI}`;
-                window.open(authUrl, 'GitHubLogin', 'width=600,height=700');
-            }
-
-            // This function will be called from callback.html
-            window.exchangeCodeForToken = async function(code) {
-                const proxyUrl = `https://github-oauth-proxy-server.vercel.app/api/github-auth?code=${code}`;
-                try {
-                    const response = await fetch(proxyUrl);
-                    if (!response.ok) throw new Error('Failed to exchange code for token');
-
-                    const data = await response.json();
-                    if (data.access_token) {
-                        setGitHubToken(data.access_token);
-                        // Retrieve and execute the stored action after login
-                        const actionState = JSON.parse(sessionStorage.getItem('github_action'));
-                        sessionStorage.removeItem('github_action'); // Clean up
-
-                        if (actionState) {
-                            if (actionState.action === 'follow') {
-                                await followUser();
-                            } else if (actionState.action === 'star') {
-                                await starRepository(actionState.repo);
-                            } else if (actionState.action === 'followAndStarAll') {
-                                await followAndStarAll();
-                            }
-                        }
-                    } else {
-                        throw new Error(data.error || 'Unknown error during token exchange.');
-                    }
-                } catch (error) {
-                    console.error('Token exchange error:', error);
-                    alert(`Login failed: ${error.message}`);
-                }
-            }
-
-            // --- Action Handlers ---
-            function handleFollow() {
-                const token = getGitHubToken();
-                if (!token) {
-                    loginToGitHub('follow');
-                } else {
-                    followUser();
-                }
-            }
-
-            function handleStar(repoFullName) {
-                const token = getGitHubToken();
-                if (!token) {
-                    loginToGitHub('star', repoFullName);
-                } else {
-                    starRepository(repoFullName);
-                }
-            }
-
-            function handleFollowAndStarAll() {
-                const token = getGitHubToken();
-                if (!token) {
-                    loginToGitHub('followAndStarAll');
-                } else {
-                    followAndStarAll();
-                }
-            }
-
-
-            // --- Core API Functions ---
-
-            // Function to follow the user
-            async function followUser() {
-                const token = getGitHubToken();
-                if (!token) return; // Should be handled by handlers, but as a safeguard
-
-                try {
-                    const response = await fetch(`https://api.github.com/user/following/${GITHUB_USERNAME}`, {
-                        method: 'PUT',
-                        headers: { 'Authorization': `token ${token}`, 'Content-Length': '0' }
-                    });
-                    if (response.status === 204) {
-                        alert(`Thanks for following ${GITHUB_USERNAME}!`);
-                    } else if (response.status === 401) {
-                        loginToGitHub('follow'); // Re-authenticate
-                    } else {
-                        throw new Error('Failed to follow user.');
-                    }
-                } catch (error) {
-                    console.error('Follow error:', error);
-                }
-            }
-
-            // Function to star a single repository
-            async function starRepository(repoFullName) {
-                const token = getGitHubToken();
-                if (!token) return; // Safeguard
-
-                try {
-                    const response = await fetch(`https://api.github.com/user/starred/${repoFullName}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Authorization': `token ${token}`,
-                            'Accept': 'application/vnd.github.v3+json',
-                            'Content-Length': '0'
-                        }
-                    });
-
-                    if (response.status === 204) {
-                        alert(`Successfully starred ${repoFullName}! ⭐`);
-                        const starButton = document.querySelector(`.star-repo-btn[data-repo-full-name="${repoFullName}"]`);
-                        if (starButton) {
-                            starButton.disabled = true;
-                            starButton.innerHTML = '<i class="fas fa-check text-green-500"></i> Starred';
-                        }
-                    } else if (response.status === 401) {
-                        loginToGitHub('star', repoFullName); // Re-authenticate
-                    } else {
-                        throw new Error('Failed to star repository.');
-                    }
-                } catch (error) {
-                    console.error(`Failed to star ${repoFullName}:`, error);
-                    alert(`Error: ${error.message}`);
-                }
-            }
-
-            // Function to follow and star all repositories
-            async function followAndStarAll() {
-                const token = getGitHubToken();
-                if (!token) return; // Safeguard
-
-                try {
-                    // 1. Follow User
-                    const followResponse = await fetch(`https://api.github.com/user/following/${GITHUB_USERNAME}`, {
-                        method: 'PUT',
-                        headers: { 'Authorization': `token ${token}`, 'Content-Length': '0' }
-                    });
-                    if (followResponse.status !== 204) console.error('Failed to follow user, but continuing to star.');
-
-                    // 2. Fetch all repos
-                    const reposResponse = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100`);
-                    if (!reposResponse.ok) throw new Error('Failed to fetch repositories.');
-                    let repos = await reposResponse.json();
-                    const ignoredRepos = ['JThweb', 'new'];
-                    repos = repos.filter(repo => !repo.fork && !ignoredRepos.includes(repo.name));
-
-                    // 3. Star all repos in parallel
-                    await Promise.all(repos.map(repo =>
-                        fetch(`https://api.github.com/user/starred/${repo.full_name}`, {
-                            method: 'PUT',
-                            headers: { 'Authorization': `token ${token}`, 'Content-Length': '0' }
-                        })
-                    ));
-
-                    alert('Thanks for your support! You are now following and have starred all projects. ⭐');
-                    // Refresh projects to show they are starred
-                    fetchAndDisplayProjects();
-
-                } catch (error) {
-                    console.error('Follow and star all error:', error);
-                    alert('There was an issue with the follow/star all feature.');
-                }
-            }
-
-            // --- Fetch Project Stats and Update Hero Section ---
-            async function fetchAndDisplayProjects() {
-                const projectsGrid = document.getElementById('projects-grid');
-                const totalProjectsSpan = document.getElementById('total-projects');
-                const totalStarsSpan = document.getElementById('total-stars');
-                const token = getGitHubToken(); // Get token to check starred status
-
-                if (!projectsGrid) return;
-
-                try {
-                    // Fetch user's starred repos if logged in
-                    let starredRepos = new Set();
-                    if (token) {
-                        try {
-                            const starredResponse = await fetch('https://api.github.com/user/starred?per_page=100', {
-                                headers: { 'Authorization': `token ${token}` }
-                            });
-                            if (starredResponse.ok) {
-                                const starredData = await starredResponse.json();
-                                starredData.forEach(repo => starredRepos.add(repo.full_name));
-                            }
-                        } catch (e) {
-                            console.error("Could not fetch user's starred repos", e);
-                        }
-                    }
-
-
-                    const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=pushed&per_page=100`);
-                    if (!response.ok) {
-                        throw new Error(`GitHub API error: ${response.statusText}`);
-                    }
-                    let repos = await response.json();
-                    const ignoredRepos = ['JThweb', 'new'];
-
-                    // Filter out forked repos and ignored repos
-                    repos = repos.filter(repo => !repo.fork && !ignoredRepos.includes(repo.name));
-
-                    // Calculate total stars
-                    const totalStars = repos.reduce((acc, repo) => acc + repo.stargazers_count, 0);
-
-                    // Update total projects and stars counts
-                    if (totalProjectsSpan) {
-                        totalProjectsSpan.textContent = `${repos.length} Projects`;
-                    }
-                    if (totalStarsSpan) {
-                        totalStarsSpan.textContent = `${totalStars} Stars`;
-                    }
-
-                    // Sort by stars for display
-                    repos.sort((a, b) => b.stargazers_count - a.stargazers_count);
-
-                    // Slice the array to get the top 8 projects for the showcase
-                    const showcasedRepos = repos.slice(0, 8);
-
-                    // Clear existing projects and render new ones
-                    projectsGrid.innerHTML = '';
-                    showcasedRepos.forEach(repo => {
-                        const isStarred = starredRepos.has(repo.full_name);
-                        const projectCard = document.createElement('div');
-                        projectCard.className = 'section-card flex flex-col';
-                        projectCard.innerHTML = `
-                            <div class="flex-grow">
-                                <h3 class="font-bold text-xl mb-2">${repo.name.replace(/[-_]/g, ' ')}</h3>
-                                <p class="text-sm" style="color: var(--text-secondary);">${repo.description || 'No description available.'}</p>
-                                <div class="flex items-center mt-3 text-sm text-[var(--text-secondary)]">
-                                    <span class="flex items-center mr-4"><i class="fas fa-star mr-1 text-yellow-500"></i> ${repo.stargazers_count}</span>
-                                    <span class="flex items-center"><i class="fas fa-code-branch mr-1 text-gray-500"></i> ${repo.forks_count}</span>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-4">
-                                <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="sm:col-span-3 px-3 py-2 rounded-lg font-semibold animated-button primary text-sm text-center">View on GitHub</a>
-                                <button
-                                    class="px-3 py-2 rounded-lg font-semibold animated-button secondary text-sm star-repo-btn"
-                                    data-repo-full-name="${repo.full_name}"
-                                    onclick="handleStar('${repo.full_name}')"
-                                    ${isStarred ? 'disabled' : ''}>
-                                    ${isStarred ? '<i class="fas fa-check text-green-500"></i> Starred' : '<i class="fas fa-star"></i> Star'}
-                                </button>
-                                <a href="https://ko-fi.com/jthweb/10" target="_blank" rel="noopener noreferrer" class="sm:col-span-2 px-3 py-2 rounded-lg font-semibold animated-button secondary text-sm text-center">
-                                    <i class="far fa-heart"></i> Sponsor
-                                </a>
-                            </div>
-                        `;
-                        projectsGrid.appendChild(projectCard);
-                    });
-                } catch (error) {
-                    console.error('Failed to fetch projects:', error);
-                    if (projectsGrid) {
-                        projectsGrid.innerHTML = `<p class="text-center col-span-full" style="color: var(--text-secondary);">Could not load projects. ${error.message}</p>`;
-                    }
-                }
-            }
-
-            // --- Intersection Observer for Animations ---
-            const observer = new IntersectionObserver(entries => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('animate-fade-in');
-                        if (entry.target.id === 'skills') {
-                           animateProgressBars();
-                        }
-                        observer.unobserve(entry.target); // Stop observing once animated
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            // --- Three.js Interactive Background (More "Flying Stuff") ---
-            let scene, camera, renderer, shape, particles;
-            const canvas = document.getElementById('bg-canvas');
-            let mouseX = 0, mouseY = 0;
-
-            function init3D() {
-                scene = new THREE.Scene();
-                camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-                renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
-                renderer.setSize(window.innerWidth, window.innerHeight);
-
-                // Icosahedron (main shape)
-                const geometry = new THREE.IcosahedronGeometry(1.5, 0);
-                const material = new THREE.MeshStandardMaterial({
-                    color: 0x0078d4, // Default primary color
-                    metalness: 0.3,
-                    roughness: 0.5,
-                    wireframe: true,
-                    transparent: true, // Make it subtle
-                    opacity: 0.3 // Reduced opacity
-                });
-                shape = new THREE.Mesh(geometry, material);
-                scene.add(shape);
-
-                // Particle System (flying stuff)
-                const particleCount = 1000;
-                const particleGeometry = new THREE.BufferGeometry();
-                const positions = new Float32Array(particleCount * 3);
-                const colors = new Float32Array(particleCount * 3);
-
-                const color1 = new THREE.Color(0xAAAAAA); // Light gray
-                const color2 = new THREE.Color(0xDDDDDD); // Lighter gray
-
-                for (let i = 0; i < particleCount; i++) {
-                    // Random positions within a cube
-                    positions[i * 3] = (Math.random() * 2 - 1) * 20; // x
-                    positions[i * 3 + 1] = (Math.random() * 2 - 1) * 20; // y
-                    positions[i * 3 + 2] = (Math.random() * 2 - 1) * 20; // z
-
-                    // Random color between two shades
-                    const mixedColor = new THREE.Color();
-                    mixedColor.lerpColors(color1, color2, Math.random());
-                    colors[i * 3] = mixedColor.r;
-                    colors[i * 3 + 1] = mixedColor.g;
-                    colors[i * 3 + 2] = mixedColor.b;
-                }
-
-                particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-                particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-                const particleMaterial = new THREE.PointsMaterial({
-                    size: 0.05,
-                    vertexColors: true, // Use colors from geometry
-                    transparent: true,
-                    opacity: 0.6,
-                    blending: THREE.AdditiveBlending // For a glowing effect
-                });
-                particles = new THREE.Points(particleGeometry, particleMaterial);
-                scene.add(particles);
-
-
-                const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-                scene.add(ambientLight);
-                const pointLight = new THREE.PointLight(0xffffff, 0.8);
-                pointLight.position.set(5, 5, 5);
-                scene.add(pointLight);
-
-                camera.position.z = 5;
-                canvas.style.opacity = '0.7'; // Increased opacity for more prominence
-                document.addEventListener('mousemove', onDocumentMouseMove, false);
-            }
-
-            function onDocumentMouseMove(event) {
-                mouseX = (event.clientX - window.innerWidth / 2) / 100;
-                mouseY = (event.clientY - window.innerHeight / 2) / 100;
-            }
-
-            function animate3D() {
-                if (!shape || !renderer || !camera || !particles) return; // Ensure all Three.js elements are initialized
-                requestAnimationFrame(animate3D);
-
-                // Smooth camera movement based on mouse position
-                camera.position.x += (mouseX - camera.position.x) * .05;
-                camera.position.y += (-mouseY - camera.position.y) * .05;
-                camera.lookAt(scene.position);
-
-                // Rotate the shape
-                shape.rotation.y += 0.001;
-                shape.rotation.x += 0.0005;
-
-                // Animate particles (subtle movement)
-                particles.rotation.y += 0.0001;
-                particles.rotation.x += 0.00005;
-
-                renderer.render(scene, camera);
-            }
-
-            function onWindowResize() {
-                if (!camera || !renderer) return;
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            }
-
-            // Function to update 3D shape and particle color based on theme
-            window.update3DTheme = function(isDark) {
-                if (shape && shape.material) {
-                    const newColor = isDark ? 0x2899f5 : 0x0078d4; // Dark mode primary vs Light mode primary
-                    shape.material.color.setHex(newColor);
-                }
-                if (particles && particles.material) {
-                    const newParticleColor1 = isDark ? 0x666666 : 0xAAAAAA;
-                    const newParticleColor2 = isDark ? 0x999999 : 0xDDDDDD;
-                    // Recreate particle colors (simple approach, for more complex, update attributes directly)
-                    const colors = particles.geometry.attributes.color.array;
-                    const colorA = new THREE.Color(newParticleColor1);
-                    const colorB = new THREE.Color(newParticleColor2);
-                    for (let i = 0; i < particles.geometry.attributes.position.count; i++) {
-                        const mixedColor = new THREE.Color();
-                        mixedColor.lerpColors(colorA, colorB, Math.random());
-                        colors[i * 3] = mixedColor.r;
-                        colors[i * 3 + 1] = mixedColor.g;
-                        colors[i * 3 + 2] = mixedColor.b;
-                    }
-                    particles.geometry.attributes.color.needsUpdate = true;
-                }
-            }
-
-            // Initialize Three.js on load
-            init3D();
-            animate3D();
-            window.update3DTheme(document.documentElement.classList.contains('dark'));
-            window.addEventListener('resize', onWindowResize, false);
-
-            // --- Intro Loading Animation Logic ---
-            // Initially hide main content
-            mainContent.classList.add('hidden');
-
-            window.addEventListener('load', () => {
-                // Check for a completed OAuth action on page load
-                const token = getGitHubToken();
-                const actionState = JSON.parse(sessionStorage.getItem('github_action'));
-
-                if (token && actionState && window.opener && window.opener.exchangeCodeForToken) {
-                    // This block is for the popup window after login, to execute the action in the main window.
-                    // It's a fallback, primary logic is in exchangeCodeForToken.
-                } else {
-                     // This is the main page loading
-                    fetchAndDisplayProjects();
-                    updateGitHubStatsTheme(document.documentElement.classList.contains('dark'));
-                }
-
-
-                setTimeout(() => {
-                    if (introLoader) {
-                        introLoader.classList.add('fade-out');
-                        introLoader.addEventListener('transitionend', () => {
-                            introLoader.remove(); // Remove from DOM after fade out
-                            if (mainContent) {
-                                mainContent.style.display = 'block'; // Make it block before fading
-                                setTimeout(() => { // Small delay to ensure display:block applies before transition
-                                    mainContent.classList.add('show'); // Fade in main content
-                                    // Trigger initial animations for sections after main content is visible
-                                    document.querySelectorAll('section').forEach(sec => {
-                                        sec.classList.add('opacity-0'); // Ensure initial opacity is 0 for sections
-                                        observer.observe(sec);
-                                    });
-                                }, 50); // Small delay
-                            }
-                        });
-                    }
-                }, 2000); // 2 seconds delay for intro loader
-            });
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
         });
     </script>
+
 </body>
 </html>

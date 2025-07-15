@@ -1,24 +1,168 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>GitHub Auth Callback</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+            color: #333;
+            text-align: center;
+        }
+        .container {
+            padding: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h1 {
+            font-size: 1.5rem;
+        }
+        p {
+            font-size: 1rem;
+            color: #666;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 1rem auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="message-container">
+        <div id="loader" class="loader"></div>
+        <h1 id="message-title">Authenticating with GitHub...</h1>
+        <p id="message-text">Please wait while we complete the process.</p>
+    </div>
+
     <script>
-        window.onload = function() {
+        // IMPORTANT: Replace this with the URL of your serverless function/proxy
+        // This function will securely exchange the code for an access token.
+        const TOKEN_PROXY_URL = 'https://github-oauth-proxy-server.vercel.app/api/github-token';
+
+        const GITHUB_USERNAME = 'jthweb';
+
+        // Function to update the UI
+        function updateMessage(title, text, showLoader = false) {
+            document.getElementById('message-title').textContent = title;
+            document.getElementById('message-text').textContent = text;
+            document.getElementById('loader').style.display = showLoader ? 'block' : 'none';
+        }
+
+        // Function to perform GitHub API actions
+        async function performGitHubAction(token, action, repo) {
+            const headers = {
+                'Authorization': `Bearer ${token}`,
+                'Accept': 'application/vnd.github.v3+json'
+            };
+
+            try {
+                if (action === 'follow' || action === 'follow_and_star_all') {
+                    updateMessage('Following user...', `Attempting to follow ${GITHUB_USERNAME}.`);
+                    const followResponse = await fetch(`https://api.github.com/user/following/${GITHUB_USERNAME}`, {
+                        method: 'PUT',
+                        headers: headers
+                    });
+                    if (!followResponse.ok) throw new Error(`Failed to follow. Status: ${followResponse.status}`);
+                }
+
+                if (action === 'star') {
+                    updateMessage('Starring repository...', `Attempting to star ${repo}.`);
+                    const starResponse = await fetch(`https://api.github.com/user/starred/${repo}`, {
+                        method: 'PUT',
+                        headers: headers
+                    });
+                    if (!starResponse.ok) throw new Error(`Failed to star ${repo}. Status: ${starResponse.status}`);
+                }
+
+                if (action === 'follow_and_star_all') {
+                    updateMessage('Fetching repositories...', 'Getting the list of repositories to star.');
+                    const reposResponse = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100`);
+                    const repos = await reposResponse.json();
+                    const originalRepos = repos.filter(r => !r.fork);
+
+                    for (const r of originalRepos) {
+                        updateMessage('Starring all repositories...', `Starring ${r.full_name}...`, true);
+                        await fetch(`https://api.github.com/user/starred/${r.full_name}`, {
+                            method: 'PUT',
+                            headers: headers
+                        });
+                        // Small delay to avoid hitting rate limits too quickly
+                        await new Promise(resolve => setTimeout(resolve, 200));
+                    }
+                }
+
+                updateMessage('Success!', 'Thank you! The window will close shortly.');
+
+            } catch (error) {
+                console.error('GitHub Action Error:', error);
+                updateMessage('Action Failed', `Could not complete the action. ${error.message}`);
+            } finally {
+                // Clean up local storage
+                localStorage.removeItem('github_action');
+                localStorage.removeItem('github_repo');
+                // Close the window after a delay
+                setTimeout(() => window.close(), 4000);
+            }
+        }
+
+        // Main function on window load
+        window.onload = async function() {
             const urlParams = new URLSearchParams(window.location.search);
             const code = urlParams.get('code');
+            const action = localStorage.getItem('github_action');
+            const repo = localStorage.getItem('github_repo');
 
-            if (code && window.opener && window.opener.exchangeCodeForToken) {
-                // Pass the code to the main window and close the popup
-                window.opener.exchangeCodeForToken(code);
-                window.close();
-            } else {
-                // Handle error or direct access
-                document.body.innerHTML = "<h1>Authentication Error</h1><p>Could not complete the authentication process. Please try again.</p>";
+            if (!code || !action) {
+                updateMessage('Authentication Error', 'No authorization code or action found. Please try again from the main page.');
+                return;
+            }
+
+            try {
+                // 1. Exchange code for access token via the proxy
+                updateMessage('Exchanging token...', 'Securely verifying your authorization.', true);
+                const tokenResponse = await fetch(TOKEN_PROXY_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code: code })
+                });
+
+                if (!tokenResponse.ok) {
+                    throw new Error('Failed to get access token from proxy.');
+                }
+
+                const { access_token } = await tokenResponse.json();
+
+                if (!access_token) {
+                    throw new Error('Access token was not returned by the proxy.');
+                }
+
+                // 2. Perform the stored action
+                await performGitHubAction(access_token, action, repo);
+
+            } catch (error) {
+                console.error('Callback Error:', error);
+                updateMessage('Authentication Error', `An error occurred: ${error.message}. Please try again.`);
+                // Clean up local storage on error
+                localStorage.removeItem('github_action');
+                localStorage.removeItem('github_repo');
             }
         };
     </script>
-</head>
-<body>
-    <p>Authenticating with GitHub, please wait...</p>
 </body>
 </html>
