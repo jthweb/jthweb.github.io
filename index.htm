@@ -603,26 +603,23 @@
 
     <script>
         // --- GitHub OAuth Configuration ---
-        // IMPORTANT: Replace with your actual GitHub OAuth App Client ID
-        const GITHUB_CLIENT_ID = 'Ov23liSLmQfrm4aBKuMk'; // TODO: Replace with your Client ID
+        const GITHUB_CLIENT_ID = 'Ov23liSLmQfrm4aBKuMk';
         const GITHUB_USERNAME = 'jthweb';
-        const REDIRECT_URI = `${window.location.origin}/callback.html`;
+        const PROXY_URL = 'https://github-oauth-proxy-server.vercel.app/api/auth';
 
         // --- Authentication Handlers ---
-        function redirectToGitHub(scope, action, repo = null) {
-            localStorage.setItem('github_action', action);
+        function redirectToProxy(action, repo = null) {
+            let proxyUrl = `${PROXY_URL}?action=${action}`;
             if (repo) {
-                localStorage.setItem('github_repo', repo);
-            } else {
-                localStorage.removeItem('github_repo');
+                proxyUrl += `&repo=${encodeURIComponent(repo)}`;
             }
-            const authUrl = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${scope}`;
+
             // Open the authorization page in a popup window
-            const authWindow = window.open(authUrl, 'githubAuth', 'width=600,height=700,scrollbars=yes');
+            const authWindow = window.open(proxyUrl, 'githubAuth', 'width=600,height=700,scrollbars=yes');
 
             // Optional: Add a listener to know when the window is closed, to refresh data
             const checkWindow = setInterval(() => {
-                if (authWindow.closed) {
+                if (!authWindow || authWindow.closed) {
                     clearInterval(checkWindow);
                     // You could re-fetch GitHub data here if you want the page to update instantly
                     // For example: fetchGitHubData();
@@ -631,15 +628,15 @@
         }
 
         function handleFollow() {
-            redirectToGitHub('user:follow', 'follow');
+            redirectToProxy('follow');
         }
 
         function handleStar(repoName) {
-            redirectToGitHub('public_repo', 'star', repoName);
+            redirectToProxy('star', repoName);
         }
 
         function handleFollowAndStarAll() {
-            redirectToGitHub('user:follow,public_repo', 'follow_and_star_all');
+            redirectToProxy('follow_and_star_all');
         }
 
         // --- Theme Toggle ---
