@@ -313,6 +313,13 @@
             border-color: color-mix(in srgb, var(--border-color) 90%, black);
         }
 
+        /* --- Footer --- */
+        footer {
+            background-color: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
 
         /* Intro Loader */
         #intro-loader {
@@ -585,18 +592,19 @@
                     </a>
                 </div>
             </section>
+
         </main>
 
         <footer class="text-center py-8" style="color: var(--text-secondary);">
-            <p>&copy; 2024 JThweb. All Rights Reserved.</p>
-            <p>Built with <i class="fas fa-heart text-red-500"></i> and a lot of <i class="fas fa-coffee"></i></p>
+            <p>Copyleft © 2025 JThweb. All Rights Reserved.</p>
+            <p>Built with <i class="fas fa-heart text-red-500"></i> and lots of support coffees</p>
         </footer>
     </div>
 
     <script>
         // --- GitHub OAuth Configuration ---
         // IMPORTANT: Replace with your actual GitHub OAuth App Client ID
-        const GITHUB_CLIENT_ID = 'Iv1.748f69a4e5883718'; // TODO: Replace with your Client ID
+        const GITHUB_CLIENT_ID = 'Ov23liSLmQfrm4aBKuMk'; // TODO: Replace with your Client ID
         const GITHUB_USERNAME = 'jthweb';
         const REDIRECT_URI = `${window.location.origin}/callback.html`;
 
@@ -608,8 +616,18 @@
             } else {
                 localStorage.removeItem('github_repo');
             }
-            const authUrl = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${scope}&login=${GITHUB_USERNAME}`;
-            window.location.href = authUrl;
+            const authUrl = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${scope}`;
+            // Open the authorization page in a popup window
+            const authWindow = window.open(authUrl, 'githubAuth', 'width=600,height=700,scrollbars=yes');
+
+            // Optional: Add a listener to know when the window is closed, to refresh data
+            const checkWindow = setInterval(() => {
+                if (authWindow.closed) {
+                    clearInterval(checkWindow);
+                    // You could re-fetch GitHub data here if you want the page to update instantly
+                    // For example: fetchGitHubData();
+                }
+            }, 500);
         }
 
         function handleFollow() {
@@ -628,25 +646,45 @@
         const themeToggle = document.getElementById('theme-toggle');
         const html = document.documentElement;
 
-        // On page load, check saved theme
-        if (localStorage.getItem('theme') === 'dark') {
-            html.classList.add('dark');
-            themeToggle.checked = true;
+        // Function to set theme
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                html.classList.add('dark');
+                themeToggle.checked = true;
+            } else {
+                html.classList.remove('dark');
+                themeToggle.checked = false;
+            }
+            localStorage.setItem('theme', theme);
+            // We need to update the stats images if the theme changes after initial load
+            if (document.getElementById('main-content').classList.contains('show')) {
+                setGitHubStatsImages();
+            }
+        }
+
+        // On page load, check saved theme or system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme) {
+            setTheme(savedTheme);
         } else {
-            html.classList.remove('dark');
-            themeToggle.checked = false;
+            setTheme(systemPrefersDark ? 'dark' : 'light');
         }
 
         // Toggle theme on click
         themeToggle.addEventListener('change', () => {
-            if (themeToggle.checked) {
-                html.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                html.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
+            setTheme(themeToggle.checked ? 'dark' : 'light');
+        });
+
+        // Listen for changes in system preference
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            // Only change if the user hasn't manually set a theme
+            if (!localStorage.getItem('theme')) {
+                setTheme(e.matches ? 'dark' : 'light');
             }
         });
+
 
         // --- Mobile Menu ---
         const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -674,8 +712,8 @@
                 if (!response.ok) throw new Error('Network response was not ok.');
                 const repos = await response.json();
 
-                // Filter out forked repos
-                const originalRepos = repos.filter(repo => !repo.fork);
+                // Filter out forked repos and specific repos like "new"
+                const originalRepos = repos.filter(repo => !repo.fork && repo.name.toLowerCase() !== 'new');
 
                 // Calculate total stars
                 const totalStars = originalRepos.reduce((acc, repo) => acc + repo.stargazers_count, 0);
@@ -699,11 +737,16 @@
                                 <h3 class="text-xl font-bold mb-2">${repo.name}</h3>
                                 <p class="text-sm mb-4" style="color: var(--text-secondary);">${repo.description || 'No description available.'}</p>
                             </div>
-                            <div class="mt-4 flex items-center justify-between">
-                                <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold hover:text-[var(--primary)]">View on GitHub &rarr;</a>
-                                <button onclick="handleStar('${repo.full_name}')" class="px-4 py-2 rounded-lg font-semibold animated-button secondary text-sm">
-                                    <i class="fas fa-star mr-1"></i> Star
-                                </button>
+                            <div class="mt-4 flex flex-wrap items-center justify-between gap-2">
+                                <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg font-semibold animated-button secondary text-xs">View on GitHub</a>
+                                <div class="flex items-center gap-2">
+                                    <button onclick="handleStar('${repo.full_name}')" class="px-3 py-1.5 rounded-lg font-semibold animated-button secondary text-xs">
+                                        ⭐
+                                    </button>
+                                    <a href="https://ko-fi.com/jthweb" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg font-semibold animated-button secondary text-xs">
+                                        <i class="far fa-heart"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     `;
@@ -719,6 +762,18 @@
             }
         }
 
+        // --- Set GitHub Stats Images ---
+        function setGitHubStatsImages() {
+            const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            const themeQuery = `&theme=${theme === 'dark' ? 'dark' : 'default'}`;
+            const base = 'https://github-readme-stats.vercel.app/api';
+
+            document.getElementById('github-top-langs').src = `${base}/top-langs/?username=${GITHUB_USERNAME}&layout=compact&langs_count=8${themeQuery}`;
+            document.getElementById('github-contributions').src = `https://github.com/JThweb/JThweb/raw/output/github-contribution-grid-snake.svg`;
+            document.getElementById('github-stats-card').src = `${base}?username=${GITHUB_USERNAME}&show_icons=true${themeQuery}`;
+            document.getElementById('github-streak-stats').src = `${base}/streak-stats?username=${GITHUB_USERNAME}${themeQuery}`;
+        }
+
 
         // --- Intro Loader & Content Fade-in ---
         window.addEventListener('load', () => {
@@ -726,8 +781,9 @@
             const mainContent = document.getElementById('main-content');
             const bgCanvas = document.getElementById('bg-canvas');
 
-            // Fetch data while loader is showing
+            // Fetch data and set stats images while loader is showing
             fetchGitHubData();
+            setGitHubStatsImages();
 
             // Set a minimum time for the loader to be visible
             setTimeout(() => {
@@ -756,20 +812,33 @@
         const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg-canvas'), alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
 
-        const particles = new THREE.BufferGeometry();
+        // Create an isometric-style wireframe shape (Icosahedron for more complexity)
+        const shapeGeometry = new THREE.IcosahedronGeometry(1, 0);
+        const shapeMaterial = new THREE.MeshBasicMaterial({ color: 0x0078d4, wireframe: true });
+        const shape = new THREE.Mesh(shapeGeometry, shapeMaterial);
+        scene.add(shape);
+
+        // Create flying particles
+        const particlesGeometry = new THREE.BufferGeometry();
         const particleCount = 5000;
         const posArray = new Float32Array(particleCount * 3);
 
         for (let i = 0; i < particleCount * 3; i++) {
-            posArray[i] = (Math.random() - 0.5) * (Math.random() * 5);
+            posArray[i] = (Math.random() - 0.5) * 10;
         }
 
-        particles.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-        const material = new THREE.PointsMaterial({ size: 0.005, color: 0x0078d4 });
-        const particleMesh = new THREE.Points(particles, material);
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.005,
+            color: 0x0078d4,
+            transparent: true,
+            opacity: 0.7
+        });
+        const particleMesh = new THREE.Points(particlesGeometry, particlesMaterial);
         scene.add(particleMesh);
 
-        camera.position.z = 1.5;
+
+        camera.position.z = 3;
 
         let mouseX = 0;
         let mouseY = 0;
@@ -780,13 +849,24 @@
 
         function animate() {
             requestAnimationFrame(animate);
-            particleMesh.rotation.y += 0.0001;
-            particleMesh.rotation.x += 0.0001;
 
+            // Animate shape
+            shape.rotation.x += 0.001;
+            shape.rotation.y += 0.001;
+
+            // Animate particles
+            particleMesh.rotation.y += 0.0002;
+
+            // Make animation responsive to cursor
             if (mouseX > 0) {
-                particleMesh.rotation.y += (mouseX - window.innerWidth / 2) * 0.000005;
-                particleMesh.rotation.x += (mouseY - window.innerHeight / 2) * 0.000005;
+                const targetX = (mouseX - window.innerWidth / 2) * 0.0005;
+                const targetY = (mouseY - window.innerHeight / 2) * 0.0005;
+                shape.rotation.y += (targetX - shape.rotation.y) * 0.05;
+                shape.rotation.x += (targetY - shape.rotation.x) * 0.05;
+                particleMesh.rotation.y += (targetX - particleMesh.rotation.y) * 0.01;
+                particleMesh.rotation.x += (targetY - particleMesh.rotation.x) * 0.01;
             }
+
 
             renderer.render(scene, camera);
         }
