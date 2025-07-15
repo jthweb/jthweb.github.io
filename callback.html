@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GitHub Auth Callback</title>
+    <script>
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const code = urlParams.get('code');
+
+            if (code && window.opener && window.opener.exchangeCodeForToken) {
+                // Pass the code to the main window and close the popup
+                window.opener.exchangeCodeForToken(code);
+                window.close();
+            } else {
+                // Handle error or direct access
+                document.body.innerHTML = "<h1>Authentication Error</h1><p>Could not complete the authentication process. Please try again.</p>";
+            }
+        };
+    </script>
+</head>
+<body>
+    <p>Authenticating with GitHub, please wait...</p>
+</body>
+</html>
