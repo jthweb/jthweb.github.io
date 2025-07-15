@@ -814,7 +814,12 @@
 
         // Create an isometric-style wireframe shape (Icosahedron for more complexity)
         const shapeGeometry = new THREE.IcosahedronGeometry(1, 0);
-        const shapeMaterial = new THREE.MeshBasicMaterial({ color: 0x0078d4, wireframe: true });
+        const shapeMaterial = new THREE.MeshBasicMaterial({
+            color: 0x0078d4,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.3
+        });
         const shape = new THREE.Mesh(shapeGeometry, shapeMaterial);
         scene.add(shape);
 
@@ -832,7 +837,7 @@
             size: 0.005,
             color: 0x0078d4,
             transparent: true,
-            opacity: 0.7
+            opacity: 0.2
         });
         const particleMesh = new THREE.Points(particlesGeometry, particlesMaterial);
         scene.add(particleMesh);
