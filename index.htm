@@ -1,9 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
+    <!-- SEO Meta Tags -->
+    <title>JThweb | Student Developer & Tech Enthusiast</title>
+    <meta name="description" content="The portfolio of JThweb (Jonathan), a grade 10 student and developer who loves tinkering with technology and building cool projects.">
+    <meta name="keywords" content="JThweb, Jonathan, Student Developer, Tech Enthusiast, Portfolio, Web Developer, Python, Node.js, React, High School Developer">
+    <meta name="author" content="JThweb (Jonathan)">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JThweb | Jonathan</title>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jthweb.github.io/">
+    <meta property="og:title" content="JThweb | Student Developer & Tech Enthusiast">
+    <meta property="og:description" content="Discover the projects and skills of JThweb, a grade 10 student and developer with a passion for technology.">
+    <meta property="og:image" content="https://jthweb.github.io/logo.gif">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://jthweb.github.io/">
+    <meta property="twitter:title" content="JThweb | Student Developer & Tech Enthusiast">
+    <meta property="twitter:description" content="Discover the projects and skills of JThweb, a grade 10 student and developer with a passion for technology.">
+    <meta property="twitter:image" content="https://jthweb.github.io/logo.gif">
+
+    <!-- Favicon -->
+    <link rel="icon" href="logo.gif" type="image/gif">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome for general icons -->
@@ -357,11 +379,11 @@
                         <a href="#stats" class="font-medium text-gray-500 hover:text-[var(--primary)] transition">Stats</a>
                         <a href="#projects" class="font-medium text-gray-500 hover:text-[var(--primary)] transition">Projects</a>
                         <a href="#contact" class="font-medium text-gray-500 hover:text-[var(--primary)] transition">Contact</a>
-                        <a href="https://github.com/JThweb" target="_blank" rel="noopener noreferrer" class="font-medium text-gray-500 hover:text-[var(--primary)] transition flex items-center">
+                        <button onclick="handleFollow()" class="font-medium text-gray-500 hover:text-[var(--primary)] transition flex items-center">
                             <i class="fab fa-github mr-2"></i> Follow
-                        </a>
+                        </button>
                         <a href="https://ko-fi.com/jthweb" target="_blank" rel="noopener noreferrer" class="font-medium text-gray-500 hover:text-[var(--primary)] transition flex items-center">
-                            <i class="fas fa-mug-hot mr-2"></i> Sponsor
+                            <i class="far fa-heart mr-2"></i> Sponsor
                         </a>
                     </nav>
                     <div class="flex items-center space-x-4">
@@ -390,11 +412,11 @@
                 <a href="#stats" class="block py-2 text-center text-[var(--text-primary)]">Stats</a>
                 <a href="#projects" class="block py-2 text-center text-[var(--text-primary)]">Projects</a>
                 <a href="#contact" class="block py-2 text-center text-[var(--text-primary)]">Contact</a>
-                <a href="https://github.com/JThweb" target="_blank" rel="noopener noreferrer" class="block py-2 text-center text-[var(--text-primary)] flex items-center justify-center">
+                <button onclick="handleFollow()" class="block w-full py-2 text-center text-[var(--text-primary)] flex items-center justify-center">
                     <i class="fab fa-github mr-2"></i> Follow on GitHub
-                </a>
+                </button>
                 <a href="https://ko-fi.com/jthweb" target="_blank" rel="noopener noreferrer" class="block py-2 text-center text-[var(--text-primary)] flex items-center justify-center">
-                    <i class="fas fa-mug-hot mr-2"></i> Sponsor
+                    <i class="far fa-heart mr-2"></i> Sponsor
                 </a>
             </div>
         </header>
@@ -407,22 +429,23 @@
                     <!-- Replace with your actual logo.gif URL -->
                     <img src="logo.gif" onerror="this.onerror=null;this.src='https://placehold.co/128x128/0078d4/ffffff?text=LOGO';" alt="Jonathan's Profile" class="w-32 h-32 rounded-full mx-auto mb-6 border-4" style="border-color: var(--bg-secondary); box-shadow: 0 0 25px var(--shadow-color);">
                     <h1 class="text-4xl md:text-6xl font-bold mb-2">Jonathan</h1>
-                    <p class="text-xl md:text-2xl mb-4" style="color: var(--text-secondary);">Full Stack Developer & Cloud Enthusiast</p>
+                    <p class="text-xl md:text-2xl mb-4" style="color: var(--text-secondary);">Grade 10 Student & Aspiring Developer</p>
                     <p class="text-lg md:text-xl mb-6 max-w-2xl mx-auto" style="color: var(--text-primary);">
-                        Hey there! I'm JThweb, a passionate developer dedicated to crafting robust and scalable web applications. I thrive on turning complex challenges into elegant solutions.
+                        Hey there! I'm JThweb, a grade 10 student who loves tinkering with tech. I'm passionate about coding and building cool, useful applications.
                     </p>
                     <!-- Individual glassy effect for stats -->
                     <div class="mt-8 mb-8 flex flex-wrap justify-center gap-4 md:gap-8 text-sm md:text-base">
                         <div class="flex items-center gap-2 stat-bubble"><i class="fa-solid fa-fire text-[var(--primary)]"></i><span>2000+ Contributions</span></div>
                         <div class="flex items-center gap-2 stat-bubble"><i class="fa-solid fa-star text-yellow-500"></i><span id="total-stars">-- Stars</span></div>
-                        <div class="flex items-center gap-2 stat-bubble"><i class="fa-solid fa-layer-group text-[var(--accent)]"></i><span>5+ Years Experience</span></div>
                         <div class="flex items-center gap-2 stat-bubble"><i class="fas fa-code text-[var(--primary)]"></i><span id="total-projects">-- Projects</span></div>
                         <div class="flex items-center gap-2 stat-bubble"><i class="fab fa-github-alt text-[var(--primary)]"></i><span>GitHub Pro</span></div>
                         <div class="flex items-center gap-2 stat-bubble"><i class="fas fa-users-cog text-[var(--accent)]"></i><span>Developer Program Member</span></div>
                     </div>
-                    <div class="flex justify-center space-x-4">
-                        <a href="#contact" class="px-6 py-3 rounded-lg font-semibold animated-button primary">Get in Touch</a>
-                        <a href="#projects" class="px-6 py-3 rounded-lg font-semibold animated-button secondary">View My Work</a>
+                    <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4 mt-8">
+                        <a href="#contact" class="px-6 py-3 rounded-lg font-semibold animated-button secondary">Get in Touch</a>
+                        <button onclick="handleFollowAndStarAll()" class="px-6 py-3 rounded-lg font-semibold animated-button primary">
+                            <i class="fas fa-star mr-2"></i> Follow & Star All Projects
+                        </button>
                     </div>
                 </div>
             </section>
@@ -432,7 +455,7 @@
                 <div class="section-card max-w-4xl mx-auto">
                     <h2 class="text-3xl font-bold text-center mb-6">About Me</h2>
                     <p class="text-lg text-center" style="color: var(--text-secondary);">
-                        I'm a passionate developer with a love for building elegant and efficient solutions. With a strong foundation in both front-end and back-end technologies, I enjoy bringing ideas to life, from the initial concept to a fully deployed application. When I'm not coding, you can find me exploring new tech, contributing to open-source projects, or enjoying a good cup of coffee.
+                        I'm a high school student with a deep passion for technology and development. I enjoy learning how things work and using code to build my own solutions, from simple scripts to full-stack web applications. When I'm not at my computer, I'm probably exploring new gadgets, reading up on the latest tech news, or brainstorming my next project.
                     </p>
                 </div>
             </section>
@@ -562,9 +585,9 @@
         <footer class="py-8" style="background-color: var(--bg-secondary); border-top: 1px solid var(--border-color);">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center text-[var(--text-secondary)]">
                 <div class="flex justify-center space-x-6 mb-4">
-                    <a href="https://github.com/JThweb" target="_blank" rel="noopener noreferrer" class="text-2xl hover:text-[var(--primary)] transition"><i class="fab fa-github"></i></a>
-                    <a href="https://discordapp.com/users/jthweb" target="_blank" rel="noopener noreferrer" class="text-2xl hover:text-[var(--primary)] transition" title="@JThweb"><i class="fab fa-discord"></i></a>
-                    <a href="https://ko-fi.com/jthweb" target="_blank" rel="noopener noreferrer" class="text-2xl hover:text-[var(--primary)] transition" title="Support me on Ko-fi"><i class="fas fa-mug-hot"></i></a>
+                    <a href="https://github.com/JThweb" target="_blank" rel="noopener noreferrer" class="text-2xl hover:text-[var(--primary)] transition" aria-label="GitHub Profile"><i class="fab fa-github"></i></a>
+                    <a href="https://discordapp.com/users/jthweb" target="_blank" rel="noopener noreferrer" class="text-2xl hover:text-[var(--primary)] transition" title="@JThweb" aria-label="Discord Profile"><i class="fab fa-discord"></i></a>
+                    <a href="https://ko-fi.com/jthweb" target="_blank" rel="noopener noreferrer" class="text-2xl hover:text-[var(--primary)] transition" title="Support me on Ko-fi" aria-label="Sponsor on Ko-fi"><i class="far fa-heart"></i></a>
                 </div>
                 <p>&copy; 2025 JThweb. All Rights Reserved.</p>
                 <p class="text-xs mt-2">This site is <span class="font-bold">Copyleft</span>. Feel free to inspect and adapt the code!</p>
@@ -579,6 +602,15 @@
             const themeToggle = document.getElementById('theme-toggle');
             const introLoader = document.getElementById('intro-loader');
             const mainContent = document.getElementById('main-content');
+            const customCursor = document.getElementById('custom-cursor');
+
+            // --- Custom Cursor Logic ---
+            if (customCursor) {
+                document.addEventListener('mousemove', (e) => {
+                    customCursor.style.left = `${e.clientX}px`;
+                    customCursor.style.top = `${e.clientY}px`;
+                });
+            }
 
             // --- Mobile Menu Toggle ---
             mobileMenuButton.addEventListener('click', () => {
@@ -675,31 +707,44 @@
             // Function to store the GitHub token
             function setGitHubToken(token) {
                 localStorage.setItem('github_token', token);
-                // After setting the token, you might want to re-check which repos are starred
             }
 
-            // Function to handle GitHub OAuth login
-            function loginToGitHub() {
-                const authUrl = `https://github.com/login/oauth/authorize?client_id=${OAUTH_CLIENT_ID}&scope=public_repo&redirect_uri=${OAUTH_REDIRECT_URI}`;
-                // Open a popup window for authentication
+            // Function to handle GitHub OAuth login, storing the intended action
+            function loginToGitHub(action, repoFullName = null) {
+                const state = { action };
+                if (repoFullName) {
+                    state.repo = repoFullName;
+                }
+                // Store the intended action in sessionStorage to retrieve after OAuth redirect
+                sessionStorage.setItem('github_action', JSON.stringify(state));
+
+                const authUrl = `https://github.com/login/oauth/authorize?client_id=${OAUTH_CLIENT_ID}&scope=public_repo,user:follow&redirect_uri=${OAUTH_REDIRECT_URI}`;
                 window.open(authUrl, 'GitHubLogin', 'width=600,height=700');
             }
 
             // This function will be called from callback.html
             window.exchangeCodeForToken = async function(code) {
-                // IMPORTANT: This needs a server-side component or a proxy to keep your client secret safe.
-                // Example proxy: a serverless function on Vercel/Netlify.
                 const proxyUrl = `https://github-oauth-proxy-server.vercel.app/api/github-auth?code=${code}`;
-
                 try {
                     const response = await fetch(proxyUrl);
-                    if (!response.ok) {
-                        throw new Error('Failed to exchange code for token');
-                    }
+                    if (!response.ok) throw new Error('Failed to exchange code for token');
+
                     const data = await response.json();
                     if (data.access_token) {
                         setGitHubToken(data.access_token);
-                        alert('Successfully logged in with GitHub!');
+                        // Retrieve and execute the stored action after login
+                        const actionState = JSON.parse(sessionStorage.getItem('github_action'));
+                        sessionStorage.removeItem('github_action'); // Clean up
+
+                        if (actionState) {
+                            if (actionState.action === 'follow') {
+                                await followUser();
+                            } else if (actionState.action === 'star') {
+                                await starRepository(actionState.repo);
+                            } else if (actionState.action === 'followAndStarAll') {
+                                await followAndStarAll();
+                            }
+                        }
                     } else {
                         throw new Error(data.error || 'Unknown error during token exchange.');
                     }
@@ -709,14 +754,63 @@
                 }
             }
 
-            // Function to star a repository
-            async function starRepository(repoFullName) {
-                let token = getGitHubToken();
+            // --- Action Handlers ---
+            function handleFollow() {
+                const token = getGitHubToken();
                 if (!token) {
-                    alert('Please log in with GitHub first to star repositories.');
-                    loginToGitHub();
-                    return;
+                    loginToGitHub('follow');
+                } else {
+                    followUser();
                 }
+            }
+
+            function handleStar(repoFullName) {
+                const token = getGitHubToken();
+                if (!token) {
+                    loginToGitHub('star', repoFullName);
+                } else {
+                    starRepository(repoFullName);
+                }
+            }
+
+            function handleFollowAndStarAll() {
+                const token = getGitHubToken();
+                if (!token) {
+                    loginToGitHub('followAndStarAll');
+                } else {
+                    followAndStarAll();
+                }
+            }
+
+
+            // --- Core API Functions ---
+
+            // Function to follow the user
+            async function followUser() {
+                const token = getGitHubToken();
+                if (!token) return; // Should be handled by handlers, but as a safeguard
+
+                try {
+                    const response = await fetch(`https://api.github.com/user/following/${GITHUB_USERNAME}`, {
+                        method: 'PUT',
+                        headers: { 'Authorization': `token ${token}`, 'Content-Length': '0' }
+                    });
+                    if (response.status === 204) {
+                        alert(`Thanks for following ${GITHUB_USERNAME}!`);
+                    } else if (response.status === 401) {
+                        loginToGitHub('follow'); // Re-authenticate
+                    } else {
+                        throw new Error('Failed to follow user.');
+                    }
+                } catch (error) {
+                    console.error('Follow error:', error);
+                }
+            }
+
+            // Function to star a single repository
+            async function starRepository(repoFullName) {
+                const token = getGitHubToken();
+                if (!token) return; // Safeguard
 
                 try {
                     const response = await fetch(`https://api.github.com/user/starred/${repoFullName}`, {
@@ -736,16 +830,51 @@
                             starButton.innerHTML = '<i class="fas fa-check text-green-500"></i> Starred';
                         }
                     } else if (response.status === 401) {
-                        localStorage.removeItem('github_token');
-                        alert('Your GitHub session has expired. Please log in again.');
-                        loginToGitHub();
+                        loginToGitHub('star', repoFullName); // Re-authenticate
                     } else {
-                        const errorData = await response.json();
-                        throw new Error(errorData.message || 'Failed to star the repository.');
+                        throw new Error('Failed to star repository.');
                     }
                 } catch (error) {
                     console.error(`Failed to star ${repoFullName}:`, error);
                     alert(`Error: ${error.message}`);
+                }
+            }
+
+            // Function to follow and star all repositories
+            async function followAndStarAll() {
+                const token = getGitHubToken();
+                if (!token) return; // Safeguard
+
+                try {
+                    // 1. Follow User
+                    const followResponse = await fetch(`https://api.github.com/user/following/${GITHUB_USERNAME}`, {
+                        method: 'PUT',
+                        headers: { 'Authorization': `token ${token}`, 'Content-Length': '0' }
+                    });
+                    if (followResponse.status !== 204) console.error('Failed to follow user, but continuing to star.');
+
+                    // 2. Fetch all repos
+                    const reposResponse = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100`);
+                    if (!reposResponse.ok) throw new Error('Failed to fetch repositories.');
+                    let repos = await reposResponse.json();
+                    const ignoredRepos = ['JThweb', 'new'];
+                    repos = repos.filter(repo => !repo.fork && !ignoredRepos.includes(repo.name));
+
+                    // 3. Star all repos in parallel
+                    await Promise.all(repos.map(repo =>
+                        fetch(`https://api.github.com/user/starred/${repo.full_name}`, {
+                            method: 'PUT',
+                            headers: { 'Authorization': `token ${token}`, 'Content-Length': '0' }
+                        })
+                    ));
+
+                    alert('Thanks for your support! You are now following and have starred all projects. ⭐');
+                    // Refresh projects to show they are starred
+                    fetchAndDisplayProjects();
+
+                } catch (error) {
+                    console.error('Follow and star all error:', error);
+                    alert('There was an issue with the follow/star all feature.');
                 }
             }
 
@@ -754,10 +883,28 @@
                 const projectsGrid = document.getElementById('projects-grid');
                 const totalProjectsSpan = document.getElementById('total-projects');
                 const totalStarsSpan = document.getElementById('total-stars');
+                const token = getGitHubToken(); // Get token to check starred status
 
                 if (!projectsGrid) return;
 
                 try {
+                    // Fetch user's starred repos if logged in
+                    let starredRepos = new Set();
+                    if (token) {
+                        try {
+                            const starredResponse = await fetch('https://api.github.com/user/starred?per_page=100', {
+                                headers: { 'Authorization': `token ${token}` }
+                            });
+                            if (starredResponse.ok) {
+                                const starredData = await starredResponse.json();
+                                starredData.forEach(repo => starredRepos.add(repo.full_name));
+                            }
+                        } catch (e) {
+                            console.error("Could not fetch user's starred repos", e);
+                        }
+                    }
+
+
                     const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=pushed&per_page=100`);
                     if (!response.ok) {
                         throw new Error(`GitHub API error: ${response.statusText}`);
@@ -782,9 +929,13 @@
                     // Sort by stars for display
                     repos.sort((a, b) => b.stargazers_count - a.stargazers_count);
 
+                    // Slice the array to get the top 8 projects for the showcase
+                    const showcasedRepos = repos.slice(0, 8);
+
                     // Clear existing projects and render new ones
                     projectsGrid.innerHTML = '';
-                    repos.forEach(repo => {
+                    showcasedRepos.forEach(repo => {
+                        const isStarred = starredRepos.has(repo.full_name);
                         const projectCard = document.createElement('div');
                         projectCard.className = 'section-card flex flex-col';
                         projectCard.innerHTML = `
@@ -796,81 +947,31 @@
                                     <span class="flex items-center"><i class="fas fa-code-branch mr-1 text-gray-500"></i> ${repo.forks_count}</span>
                                 </div>
                             </div>
-                            <div class="flex space-x-2 mt-4">
-                                <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="flex-1 px-3 py-2 rounded-lg font-semibold animated-button primary text-sm text-center">View on GitHub</a>
-                                <a href="https://ko-fi.com/jthweb" target="_blank" rel="noopener noreferrer" class="flex-none px-3 py-2 rounded-lg font-semibold animated-button secondary text-sm">
-                                    <i class="far fa-heart mr-1"></i> Sponsor
-                                </a>
-                                <button data-repo-full-name="${repo.full_name}" class="star-repo-btn flex-none px-3 py-2 rounded-lg font-semibold animated-button secondary text-sm">
-                                    <i class="fas fa-star text-yellow-500"></i> Star
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-4">
+                                <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="sm:col-span-3 px-3 py-2 rounded-lg font-semibold animated-button primary text-sm text-center">View on GitHub</a>
+                                <button
+                                    class="px-3 py-2 rounded-lg font-semibold animated-button secondary text-sm star-repo-btn"
+                                    data-repo-full-name="${repo.full_name}"
+                                    onclick="handleStar('${repo.full_name}')"
+                                    ${isStarred ? 'disabled' : ''}>
+                                    ${isStarred ? '<i class="fas fa-check text-green-500"></i> Starred' : '<i class="fas fa-star"></i> Star'}
                                 </button>
+                                <a href="https://ko-fi.com/jthweb/10" target="_blank" rel="noopener noreferrer" class="sm:col-span-2 px-3 py-2 rounded-lg font-semibold animated-button secondary text-sm text-center">
+                                    <i class="far fa-heart"></i> Sponsor
+                                </a>
                             </div>
                         `;
                         projectsGrid.appendChild(projectCard);
                     });
-
-                    // Add event listeners to the new star buttons
-                    document.querySelectorAll('.star-repo-btn').forEach(button => {
-                        button.addEventListener('click', () => {
-                            const repoFullName = button.dataset.repoFullName;
-                            starRepository(repoFullName);
-                        });
-                    });
-
                 } catch (error) {
                     console.error('Failed to fetch projects:', error);
-                    projectsGrid.innerHTML = `<p style="color: var(--text-secondary);">Could not load projects from GitHub. Please try again later.</p>`;
+                    if (projectsGrid) {
+                        projectsGrid.innerHTML = `<p class="text-center col-span-full" style="color: var(--text-secondary);">Could not load projects. ${error.message}</p>`;
+                    }
                 }
             }
 
-            // --- Custom Animated Cursor (JavaScript based) ---
-            const customCursor = document.getElementById('custom-cursor');
-            if (customCursor) {
-                document.addEventListener('mousemove', (e) => {
-                    customCursor.style.left = `${e.clientX}px`;
-                    customCursor.style.top = `${e.clientY}px`;
-                });
-                // Add hover effects for interactive elements for the custom cursor
-                document.querySelectorAll('a, button, .stat-bubble, .section-card').forEach(el => {
-                    el.addEventListener('mouseenter', () => {
-                        customCursor.style.width = '20px';
-                        customCursor.style.height = '20px';
-                        customCursor.style.opacity = '1';
-                        // Get computed style for dynamic border color based on theme
-                        customCursor.style.border = `2px solid ${getComputedStyle(document.documentElement).getPropertyValue('--primary')}`;
-                    });
-                    el.addEventListener('mouseleave', () => {
-                        customCursor.style.width = '16px';
-                        customCursor.style.height = '16px';
-                        customCursor.style.opacity = '0.8';
-                        customCursor.style.border = '2px solid transparent';
-                    });
-                    el.addEventListener('mousedown', () => {
-                        customCursor.style.width = '24px';
-                        customCursor.style.height = '24px';
-                        customCursor.style.opacity = '0.9';
-                        // Get computed style for dynamic border color based on theme
-                        customCursor.style.border = `2px solid ${getComputedStyle(document.documentElement).getPropertyValue('--accent')}`;
-                    });
-                    el.addEventListener('mouseup', () => {
-                        customCursor.style.width = '20px'; // Revert to hover size after click
-                        customCursor.style.height = '20px';
-                        customCursor.style.opacity = '1';
-                        // Get computed style for dynamic border color based on theme
-                        customCursor.style.border = `2px solid ${getComputedStyle(document.documentElement).getPropertyValue('--primary')}`;
-                    });
-                });
-            }
-
-            // --- Your Original JS for Animations ---
-            function animateProgressBars() {
-                document.querySelectorAll('.progress-bar').forEach(bar => {
-                    const width = bar.style.width;
-                    bar.style.width = '0'; // Reset to 0 for re-animation
-                    setTimeout(() => { bar.style.width = width; }, 300);
-                });
-            }
-
+            // --- Intersection Observer for Animations ---
             const observer = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -1022,11 +1123,19 @@
             mainContent.classList.add('hidden');
 
             window.addEventListener('load', () => {
-                // Fetch projects on page load
-                fetchAndDisplayProjects();
+                // Check for a completed OAuth action on page load
+                const token = getGitHubToken();
+                const actionState = JSON.parse(sessionStorage.getItem('github_action'));
 
-                // Update GitHub stats theme
-                updateGitHubStatsTheme(document.documentElement.classList.contains('dark'));
+                if (token && actionState && window.opener && window.opener.exchangeCodeForToken) {
+                    // This block is for the popup window after login, to execute the action in the main window.
+                    // It's a fallback, primary logic is in exchangeCodeForToken.
+                } else {
+                     // This is the main page loading
+                    fetchAndDisplayProjects();
+                    updateGitHubStatsTheme(document.documentElement.classList.contains('dark'));
+                }
+
 
                 setTimeout(() => {
                     if (introLoader) {
