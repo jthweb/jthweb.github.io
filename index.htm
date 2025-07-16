@@ -622,7 +622,7 @@
                 if (!authWindow || authWindow.closed) {
                     clearInterval(checkWindow);
                     // You could re-fetch GitHub data here if you want the page to update instantly
-                    // For example: fetchGitHubData();
+                    fetchGitHubData();
                 }
             }, 500);
         }
@@ -733,6 +733,10 @@
                             <div>
                                 <h3 class="text-xl font-bold mb-2">${repo.name}</h3>
                                 <p class="text-sm mb-4" style="color: var(--text-secondary);">${repo.description || 'No description available.'}</p>
+                                <div class="flex items-center text-sm mt-4" style="color: var(--text-secondary);">
+                                    <span class="mr-4"><i class="fas fa-star mr-1 text-yellow-500"></i> ${repo.stargazers_count}</span>
+                                    <span class="mr-4"><i class="fas fa-code-branch mr-1 text-[var(--primary)]"></i> ${repo.forks_count}</span>
+                                </div>
                             </div>
                             <div class="mt-4 flex flex-wrap items-center justify-between gap-2">
                                 <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg font-semibold animated-button secondary text-xs">View on GitHub</a>
@@ -781,6 +785,9 @@
             // Fetch data and set stats images while loader is showing
             fetchGitHubData();
             setGitHubStatsImages();
+
+            // Auto-update data every 5 minutes
+            setInterval(fetchGitHubData, 300000);
 
             // Set a minimum time for the loader to be visible
             setTimeout(() => {
