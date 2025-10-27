@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects | JThweb</title>
+  <meta name="description" content="All GitHub projects by JThweb (Jonathan Oommen Easow) with live data from the GitHub API.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://jthweb.github.io/projects.html">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Projects | JThweb">
+  <meta property="og:description" content="Browse all repositories by JThweb with stars, forks, and quick actions.">
+  <meta property="og:image" content="https://jthweb.github.io/logo.gif">
+
+  <link rel="icon" href="https://jthweb.github.io/logo.gif" type="image/gif">
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <style>
+    #custom-cursor{position:fixed;width:16px;height:16px;border-radius:50%;background-color:var(--orange-yellow-crayola);pointer-events:none;transform:translate(-50%,-50%);transition:width .2s ease,height .2s ease,background-color .3s ease,opacity .3s ease,border .2s ease;z-index:9999;opacity:.8;border:2px solid transparent}
+    #bg-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;opacity:0;transition:opacity 1s ease-in}
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+    .btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--jet);padding:8px 12px;border-radius:8px;cursor:pointer}
+  </style>
+</head>
+<body>
+  <div id="custom-cursor"></div>
+  <canvas id="bg-canvas"></canvas>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box"><img src="https://jthweb.github.io/logo.gif" alt="Jonathan Oommen Easow" width="80"></figure>
+        <div class="info-content"><h1 class="name" title="Jonathan Oommen Easow">Jonathan Oommen Easow</h1><p class="title">Student Developer & Tech Enthusiast</p></div>
+        <button class="info_more-btn" data-sidebar-btn><span>Show Contacts</span><ion-icon name="chevron-down"></ion-icon></button>
+      </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <ul class="contacts-list">
+          <li class="contact-item"><div class="icon-box"><ion-icon name="mail-outline"></ion-icon></div><div class="contact-info"><p class="contact-title">Email</p><a href="mailto:contact@jthweb.me" class="contact-link">contact@jthweb.me</a></div></li>
+          <li class="contact-item"><div class="icon-box"><ion-icon name="calendar-outline"></ion-icon></div><div class="contact-info"><p class="contact-title">Education</p><p>Grade 10 Student</p></div></li>
+          <li class="contact-item"><div class="icon-box"><ion-icon name="location-outline"></ion-icon></div><div class="contact-info"><p class="contact-title">Location</p><address>Student Developer</address></div></li>
+        </ul>
+        <div class="separator"></div>
+        <ul class="social-list">
+          <li class="social-item"><a href="https://github.com/jthweb" target="_blank" rel="noopener" class="social-link"><ion-icon name="logo-github"></ion-icon></a></li>
+          <li class="social-item"><a href="https://x.com/jthweb" target="_blank" rel="noopener" class="social-link"><ion-icon name="logo-twitter"></ion-icon></a></li>
+          <li class="social-item"><a href="https://www.linkedin.com/in/jthweb" target="_blank" rel="noopener" class="social-link"><ion-icon name="logo-linkedin"></ion-icon></a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <nav class="navbar">
+        <ul class="navbar-list">
+          <li class="navbar-item"><a class="navbar-link" href="./index.htm">About</a></li>
+          <li class="navbar-item"><a class="navbar-link" href="./achievements.html">Achievements</a></li>
+          <li class="navbar-item"><a class="navbar-link active" href="./projects.html">Projects</a></li>
+          <li class="navbar-item"><a class="navbar-link" href="./index.htm#contact">Contact</a></li>
+          <li class="navbar-item" id="github-actions-inline">
+            <button class="btn" id="btn-follow"><i class="fab fa-github"></i> Follow</button>
+            <button class="btn" id="btn-star-all"><i class="fas fa-star"></i> Star all</button>
+            <a class="btn" href="https://ko-fi.com/jthweb" target="_blank" rel="noopener"><i class="far fa-heart"></i> Sponsor</a>
+          </li>
+        </ul>
+      </nav>
+
+      <article class="portfolio active" data-page="portfolio">
+        <header><h2 class="h2 article-title">All Projects</h2></header>
+        <section>
+          <div id="projects-grid-full" class="projects-grid"></div>
+          <p class="project-category" style="margin-top: 12px; opacity: 0.8;">Live from GitHub API · Auto-updates</p>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <script src="./assets/js/script.js"></script>
+  <script src="./assets/js/custom.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
+
