@@ -284,6 +284,35 @@
             box-shadow: 0 6px 12px var(--shadow-color);
         }
 
+        /* Achievements Tags & Cards */
+        .tag-btn {
+            display: inline-block;
+            margin: 0 6px;
+            padding: 6px 12px;
+            border-radius: 9999px;
+            border: 1px solid var(--border-color);
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .tag-btn.active, .tag-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: color-mix(in srgb, var(--primary) 80%, black);
+        }
+        .achievement-card {
+            transition: transform 0.15s ease, opacity 0.15s ease;
+        }
+        .achievement-card.hidden {
+            opacity: 0;
+            transform: scale(0.98);
+            pointer-events: none;
+            height: 0;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+
         /* Button Animations */
         .animated-button {
             position: relative; /* Needed for shine effect */
@@ -441,6 +470,7 @@
                 <a href="#skills" class="block py-2 text-center text-[var(--text-primary)]">Skills</a>
                 <a href="#stats" class="block py-2 text-center text-[var(--text-primary)]">Stats</a>
                 <a href="#projects" class="block py-2 text-center text-[var(--text-primary)]">Projects</a>
+                <a href="/github" class="block py-2 text-center text-[var(--text-primary)]">GitHub</a>
                 <a href="#contact" class="block py-2 text-center text-[var(--text-primary)]">Contact</a>
                 <button onclick="handleFollow()" class="block w-full py-2 text-center text-[var(--text-primary)] flex items-center justify-center">
                     <i class="fab fa-github mr-2"></i> Follow on GitHub
@@ -465,7 +495,7 @@
                     </p>
                     <!-- Individual glassy effect for stats -->
                     <div class="mt-8 mb-8 flex flex-wrap justify-center gap-4 md:gap-8 text-sm md:text-base">
-                        <div class="flex items-center gap-2 stat-bubble"><i class="fa-solid fa-fire text-[var(--primary)]"></i><span>2000+ Contributions</span></div>
+                        <div class="flex items-center gap-2 stat-bubble"><i class="fa-solid fa-fire text-[var(--primary)]"></i><span>4000+ Commits</span></div>
                         <div class="flex items-center gap-2 stat-bubble"><i class="fa-solid fa-star text-yellow-500"></i><span id="total-stars">-- Stars</span></div>
                         <div class="flex items-center gap-2 stat-bubble"><i class="fas fa-code text-[var(--primary)]"></i><span id="total-projects">-- Projects</span></div>
                         <div class="flex items-center gap-2 stat-bubble"><i class="fab fa-github-alt text-[var(--primary)]"></i><span>GitHub Pro</span></div>
@@ -473,9 +503,9 @@
                     </div>
                     <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4 mt-8">
                         <a href="#contact" class="px-6 py-3 rounded-lg font-semibold animated-button secondary">Get in Touch</a>
-                        <button onclick="handleFollowAndStarAll()" class="px-6 py-3 rounded-lg font-semibold animated-button primary">
-                            <i class="fas fa-star mr-2"></i> Follow me & Star All ⭐
-                        </button>
+                        <a href="/github" class="px-6 py-3 rounded-lg font-semibold animated-button primary">
+                            <i class="fas fa-star mr-2"></i> GitHub & Repos
+                        </a>
                     </div>
                 </div>
             </section>
@@ -579,30 +609,38 @@
                 </div>
             </section>
 
-            <!-- GitHub Stats Section -->
-            <section id="stats" class="my-24 scroll-mt-16 opacity-0">
-                <div class="section-card max-w-5xl mx-auto">
-                    <h2 class="text-3xl font-bold text-center mb-12">GitHub Stats</h2>
-                    <div class="space-y-8">
-                        <img id="github-contributions" src="" alt="JThweb's GitHub Contributions" class="github-stats-img w-full" />
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-                            <img id="github-stats-card" src="" alt="JThweb's GitHub Stats" class="github-stats-img" />
-                            <!-- GitHub Streak Stats -->
-                            <img id="github-streak-stats" src="" alt="JThweb's GitHub Streak Stats" class="github-stats-img" />
-                        </div>
-                    </div>
+            <!-- GitHub CTA Section -->
+            <section id="github-cta" class="my-24 scroll-mt-16 opacity-0">
+                <div class="section-card max-w-5xl mx-auto text-center">
+                    <h2 class="text-3xl font-bold mb-4">GitHub</h2>
+                    <p class="text-lg mb-6" style="color: var(--text-secondary);">All interactive GitHub features (stars, repos, and badges) have moved to a dedicated page.</p>
+                    <a href="/github" class="inline-block px-6 py-3 rounded-lg font-semibold animated-button primary">Visit GitHub Page</a>
                 </div>
             </section>
 
-            <!-- Projects Section -->
-            <section id="projects" class="my-24 scroll-mt-16 opacity-0">
-                <div class="section-card max-w-7xl mx-auto">
-                    <h2 class="text-3xl font-bold text-center mb-4">Featured Projects</h2>
-                    <p id="project-count-display" class="text-center text-lg" style="color: var(--text-secondary);">
-                        Showing 8 of <span id="total-repo-count" class="font-semibold">--</span> repositories.
-                    </p>
-                    <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-8">
-                        <!-- Projects will be dynamically inserted here -->
+            <!-- Achievements Section -->
+            <section id="achievements" class="my-24 scroll-mt-16 opacity-0">
+                <div class="section-card max-w-5xl mx-auto">
+                    <h2 class="text-3xl font-bold text-center mb-6">Achievements</h2>
+                    <div class="text-center mb-6">
+                        <button class="tag-btn active" onclick="filterAchievements('all')">All</button>
+                        <button class="tag-btn" onclick="filterAchievements('commits')">Commits</button>
+                        <button class="tag-btn" onclick="filterAchievements('projects')">Projects</button>
+                        <button class="tag-btn" onclick="filterAchievements('community')">Community</button>
+                    </div>
+                    <div id="achievements-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="achievement-card section-card" data-tags="commits">
+                            <h3 class="font-bold mb-2">4000+ Commits</h3>
+                            <p style="color: var(--text-secondary);">Surpassed 4000 commits across public repositories.</p>
+                        </div>
+                        <div class="achievement-card section-card" data-tags="projects">
+                            <h3 class="font-bold mb-2">Maintained 50+ Repositories</h3>
+                            <p style="color: var(--text-secondary);">Active maintenance and contributions across many projects.</p>
+                        </div>
+                        <div class="achievement-card section-card" data-tags="community">
+                            <h3 class="font-bold mb-2">Built JThweb-Bot</h3>
+                            <p style="color: var(--text-secondary);">Implemented GitHub OAuth bot to simplify starring/following from the site.</p>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -622,7 +660,7 @@
 
         <footer class="text-center py-8" style="color: var(--text-secondary);">
             <div class="mb-4">
-                <a href="https://github.com/jthweb" target="_blank" rel="noopener noreferrer" class="text-2xl hover:text-[var(--primary)] transition">
+                <a href="/github" class="text-2xl hover:text-[var(--primary)] transition">
                     <i class="fab fa-github"></i>
                 </a>
             </div>
@@ -732,64 +770,28 @@
 
         document.querySelectorAll('.opacity-0').forEach(el => observer.observe(el));
 
-        // --- GitHub API Fetch ---
+        // --- GitHub API Fetch (summary only on home) ---
         async function fetchGitHubData() {
             try {
                 const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=100`);
                 if (!response.ok) throw new Error('Network response was not ok.');
                 const repos = await response.json();
-
-                // Filter out forked repos and specific repos like "new"
                 const originalRepos = repos.filter(repo => !repo.fork && repo.name.toLowerCase() !== 'new');
 
-                // Calculate total stars
+                // Update only summary stats on the homepage
                 const totalStars = originalRepos.reduce((acc, repo) => acc + repo.stargazers_count, 0);
-                document.getElementById('total-stars').textContent = `${totalStars} Stars`;
+                const totalStarsEl = document.getElementById('total-stars');
+                if (totalStarsEl) totalStarsEl.textContent = `${totalStars} Stars`;
 
-                // Display total project count
-                const totalProjects = originalRepos.length;
-                document.getElementById('total-projects').textContent = `${totalProjects} Projects`;
-                document.getElementById('total-repo-count').textContent = totalProjects;
-
-
-                // Populate projects grid
-                const projectsGrid = document.getElementById('projects-grid');
-                projectsGrid.innerHTML = ''; // Clear existing
-                const featuredRepos = originalRepos.slice(0, 8); // Show 8 projects
-
-                featuredRepos.forEach(repo => {
-                    const projectCard = `
-                        <div class="section-card flex flex-col justify-between">
-                            <div>
-                                <h3 class="text-xl font-bold mb-2">${repo.name}</h3>
-                                <p class="text-sm mb-4" style="color: var(--text-secondary);">${repo.description || 'No description available.'}</p>
-                                <div class="flex items-center text-sm mt-4" style="color: var(--text-secondary);">
-                                    <span class="mr-4"><i class="fas fa-star mr-1 text-yellow-500"></i> ${repo.stargazers_count}</span>
-                                    <span class="mr-4"><i class="fas fa-code-branch mr-1 text-[var(--primary)]"></i> ${repo.forks_count}</span>
-                                </div>
-                            </div>
-                            <div class="mt-4 flex flex-wrap items-center justify-between gap-2">
-                                <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg font-semibold animated-button secondary text-xs">View on GitHub</a>
-                                <div class="flex items-center gap-2">
-                                    <button onclick="handleStar('${repo.full_name}')" class="px-3 py-1.5 rounded-lg font-semibold animated-button secondary text-xs">
-                                        ⭐
-                                    </button>
-                                    <a href="https://ko-fi.com/jthweb" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg font-semibold animated-button secondary text-xs">
-                                        <i class="far fa-heart"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    projectsGrid.innerHTML += projectCard;
-                });
+                const totalProjectsEl = document.getElementById('total-projects');
+                if (totalProjectsEl) totalProjectsEl.textContent = `${originalRepos.length} Projects`;
 
             } catch (error) {
                 console.error("Failed to fetch GitHub data:", error);
-                // Fallback text
-                document.getElementById('total-stars').textContent = 'N/A';
-                document.getElementById('total-projects').textContent = 'N/A';
-                document.getElementById('projects-grid').innerHTML = '<p>Could not load projects.</p>';
+                const totalStarsEl = document.getElementById('total-stars');
+                if (totalStarsEl) totalStarsEl.textContent = 'N/A';
+                const totalProjectsEl = document.getElementById('total-projects');
+                if (totalProjectsEl) totalProjectsEl.textContent = 'N/A';
             }
         }
 
@@ -805,6 +807,28 @@
             document.getElementById('github-streak-stats').src = `${base}/streak-stats?username=${GITHUB_USERNAME}${themeQuery}`;
         }
 
+        // --- Achievements Filtering ---
+        function filterAchievements(tag) {
+            const buttons = document.querySelectorAll('.tag-btn');
+            buttons.forEach(b => {
+                const normalized = b.textContent.trim().toLowerCase();
+                b.classList.toggle('active', (tag === 'all' && normalized === 'all') || normalized === tag);
+            });
+            const cards = document.querySelectorAll('.achievement-card');
+            cards.forEach(card => {
+                if (tag === 'all') {
+                    card.classList.remove('hidden');
+                } else {
+                    const tags = card.dataset.tags.split(',').map(t => t.trim());
+                    if (tags.includes(tag)) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                }
+            });
+        }
+
 
         // --- Intro Loader & Content Fade-in ---
         window.addEventListener('load', () => {
@@ -818,6 +842,8 @@
 
             // Auto-update data every 5 minutes
             setInterval(fetchGitHubData, 300000);
+            // Initialize achievements filter (if available)
+            if (typeof filterAchievements === 'function') filterAchievements('all');
 
             // Set a minimum time for the loader to be visible
             setTimeout(() => {
@@ -827,7 +853,11 @@
 
                 // Animate progress bars after content is visible
                 document.querySelectorAll('.progress-bar').forEach(bar => {
-                    bar.style.width = bar.getAttribute('style').match(/width:\s*(\d+)%/)[0];
+                    const styleAttr = bar.getAttribute('style') || '';
+                    const m = styleAttr.match(/width:\s*(\d+)%/);
+                    if (m) {
+                        bar.style.width = m[1] + '%';
+                    }
                 });
 
             }, 1500); // Minimum 1.5 seconds
