@@ -1,9 +1,9 @@
-# robots.txt for jthweb.github.io
+# robots.txt for jthweb.is-a.dev
 
 User-agent: *
 Allow: /
 
 # Sitemap location (helps search engines discover new pages)
-Sitemap: https://jthweb.github.io/sitemap.xml
+Sitemap: https://jthweb.is-a.dev/sitemap.xml
 
 # If you later need to block pages, add Disallow: /path/
