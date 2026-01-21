@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://jthweb.github.io/</loc>
+    <loc>https://jthweb.is-a.dev/</loc>
     <lastmod>2026-01-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.00</priority>
   </url>
   <url>
-    <loc>https://jthweb.github.io/Radar/</loc>
+    <loc>https://jthweb.is-a.dev/Radar/</loc>
     <lastmod>2026-01-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://jthweb.github.io/callback.html</loc>
+    <loc>https://jthweb.is-a.dev/callback.html</loc>
     <lastmod>2026-01-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.50</priority>
   </url>
   <url>
-    <loc>https://jthweb.github.io/QR_bot/ToS.md</loc>
+    <loc>https://jthweb.is-a.dev/QR_bot/ToS.md</loc>
     <lastmod>2026-01-21</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.30</priority>
