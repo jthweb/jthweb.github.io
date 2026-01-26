@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NABAT: Gaza Food Recovery Proposal</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 10pt;
+            line-height: 2;
+            margin: 1in;
+            color: #000;
+        }
+        h1 {
+            font-size: 14pt;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 0.5em;
+            line-height: 1.5;
+        }
+        h2 {
+            font-size: 12pt;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1em;
+            line-height: 1.5;
+        }
+        h3 {
+            font-size: 11pt;
+            font-weight: bold;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+        h4 {
+            font-size: 10pt;
+            font-weight: bold;
+            margin-top: 1em;
+            margin-bottom: 0.5em;
+        }
+        p {
+            text-align: justify;
+            margin-bottom: 1em;
+        }
+        ul, ol {
+            margin-left: 1.5em;
+            margin-bottom: 1em;
+        }
+        li {
+            margin-bottom: 0.5em;
+        }
+        strong {
+            font-weight: bold;
+        }
+        em {
+            font-style: italic;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1em 0;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+        hr {
+            border: none;
+            border-top: 1px solid #000;
+            margin: 2em 0;
+        }
+        .metadata {
+            margin-bottom: 2em;
+        }
+        .metadata p {
+            line-height: 1.5;
+            margin-bottom: 0.5em;
+        }
+        @media print {
+            body {
+                margin: 1in;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>NABAT: Ultra-Lightweight Digital Advisory Platform for Gaza Food Recovery</h1>
+    <h2>Rebuilding Food Systems When Farmland Is Damaged</h2>
+
+    <div class="metadata">
+        <p><strong>Team Name:</strong> Nabat Development Team</p>
+        <p><strong>Team Members & Email Addresses:</strong></p>
+        <ul>
+            <li>Jonathan Oommen Easow - jthweb@duck.com</li>
+            <li>Nishad Koshti - nishad.koshti@gmail.com</li>
+        </ul>
+        <p><strong>Theme:</strong> Rebuilding Food Systems When Farmland Is Damaged</p>
+        <p><strong>Title of Solution:</strong> Nabat: Ultra-Lightweight Digital Advisory Platform for Gaza Food Recovery</p>
+        <p><strong>Estimated Resources for Full Deployment:</strong> QAR 850,000</p>
+    </div>
+
+    <hr>
+
+    <h3>Theory of Innovation</h3>
+
+    <h4>The Need</h4>
+
+    <p>Gaza's food production has been devastated. Recent assessments suggest around 70-95% of farmland and most greenhouses, orchards, and livestock have been damaged or destroyed, leaving only about 1.5% of cropland accessible and undamaged. Farmers in remote and peri-urban areas struggle to assess damage, access seeds and tools, or know which crops can withstand salinity, heat waves, and limited irrigation under siege conditions—pushing entire communities toward famine.</p>
+
+    <p>This crisis affects 2.3 million people who face immediate food insecurity. The traditional agricultural extension system is non-functional. Farmers cannot determine what food production is still possible given their specific constraints: damaged soil contaminated with debris, high salinity from seawater intrusion, destroyed irrigation infrastructure, and severe movement restrictions that prevent in-person training or site visits.</p>
+
+    <p>The challenge is not just about distributing seeds—it's about enabling families to make informed decisions about what they can actually grow in their specific damaged conditions. A farmer with a contaminated plot needs different guidance than a family trying to grow food on a damaged rooftop with only greywater available. Without accessible, specific guidance matched to their constraints, most households cannot restart even small-scale food production.</p>
+
+    <h4>The Software Solution</h4>
+
+    <p>Nabat directly addresses the three core challenges identified: helping farmers assess their damaged spaces, connecting them to seeds and tools, and providing specific guidance on which crops can withstand salinity, heat waves, and limited irrigation.</p>
+
+    <p><strong>Platform Features (All Fully Implemented):</strong></p>
+
+    <p><strong>1. Field Logger - Damage Assessment</strong></p>
+
+    <p>Farmers document available growing spaces by answering simple questions about:</p>
+    <ul>
+        <li>Location (Gaza City, Khan Younis, Rafah, Jabalia, etc.)</li>
+        <li>Space type (rooftop, balcony, yard, indoor, container)</li>
+        <li>Area in square meters</li>
+        <li>Soil condition (damaged/debris-filled, saline, contaminated, or usable)</li>
+        <li>Water access (none, greywater, rainwater, limited clean water)</li>
+        <li>Planned crops and notes</li>
+    </ul>
+
+    <p>The system stores this locally offline and provides immediate recommendations. When online, data syncs to help NGOs understand aggregate conditions across Gaza.</p>
+
+    <p><strong>2. Interactive Map - Situational Awareness</strong></p>
+
+    <p>Real-time map showing:</p>
+    <ul>
+        <li>Damage reports with severity levels and verification status</li>
+        <li>Resource locations (water points, seed distribution, tool sharing)</li>
+        <li>Growing zones marked by community</li>
+        <li>SOS signals for urgent needs</li>
+    </ul>
+
+    <p>Users can add geo-tagged reports offline, which sync when connectivity is available.</p>
+
+    <p><strong>3. Seed Library - Climate-Resilient Crop Guidance</strong></p>
+
+    <p>20+ crop and technique entries specifically for damaged conditions:</p>
+    <ul>
+        <li><strong>Salt-tolerant:</strong> Quinoa, Salicornia (grows in saltwater), salt-tolerant tomatoes</li>
+        <li><strong>Quick harvest:</strong> Microgreens (7-day cycle), fast-growing greens</li>
+        <li><strong>Minimal water:</strong> Purslane, drought-resistant varieties</li>
+        <li><strong>No soil needed:</strong> Plastic bottle hydroponics, rooftop container kits, greywater filtration systems</li>
+    </ul>
+
+    <p>Each entry includes Arabic descriptions, water requirements, salinity tolerance, and specific instructions for Gaza's conditions.</p>
+
+    <p><strong>4. Needs & Offers Network</strong></p>
+
+    <p>Community marketplace for resource sharing:</p>
+    <ul>
+        <li>Request: seeds, containers, tools, setup help, growing knowledge</li>
+        <li>Offer: surplus seeds, volunteer assistance, equipment, expertise</li>
+        <li>Each post includes: type (offer/request), item, location, description, contact hash (privacy-protected), timestamp, optional image</li>
+    </ul>
+
+    <p>All Gaza locations supported. Posts created offline queue for sync.</p>
+
+    <p><strong>5. SOS Emergency Coordination</strong></p>
+
+    <p>Priority alert system for urgent needs:</p>
+    <ul>
+        <li>Broadcast urgent food/water/agricultural emergencies</li>
+        <li>GPS location included</li>
+        <li>Discord integration notifies NGO partners instantly</li>
+        <li>Community can respond with available resources</li>
+    </ul>
+
+    <p><strong>6. NGO Staff Panel</strong></p>
+
+    <p>Secure dashboard for aid organizations (password-protected):</p>
+    <ul>
+        <li>View all field logs and assess aggregate damage</li>
+        <li>Assign resources to urgent needs</li>
+        <li>Generate reports on community food production status</li>
+        <li>Coordinate multi-household interventions</li>
+    </ul>
+
+    <p><strong>7. AI-Powered Advisor (Chatbot)</strong></p>
+
+    <p>Google Gemini integration provides:</p>
+    <ul>
+        <li>Personalized growing advice based on user's specific constraints</li>
+        <li>Troubleshooting for crop problems (pests, disease, stress)</li>
+        <li>Step-by-step guides for techniques like greywater filtration</li>
+        <li>Answers to agricultural questions in Arabic or English</li>
+    </ul>
+
+    <p><strong>8. Multi-Language Interface</strong></p>
+
+    <p>Full support for:</p>
+    <ul>
+        <li>Arabic (primary) - right-to-left interface</li>
+        <li>English</li>
+        <li>French</li>
+        <li>Spanish</li>
+    </ul>
+    <p>Allows sharing knowledge across international aid community.</p>
+
+    <p><strong>9. Offline-First Architecture</strong></p>
+    <ul>
+        <li>All features work without internet (except chatbot which needs API)</li>
+        <li>LocalStorage caching for 100 most recent items per category</li>
+        <li>Smart background sync when connectivity available</li>
+        <li>No data loss during offline periods</li>
+        <li>Battery-optimized for low-power devices</li>
+    </ul>
+
+    <p><strong>10. Real-Time Updates (when online)</strong></p>
+
+    <p>Socket.IO enables:</p>
+    <ul>
+        <li>Instant notification of new seed offers in your area</li>
+        <li>Live updates to damage maps</li>
+        <li>Real-time coordination for resource sharing</li>
+        <li>NGO broadcasts to community</li>
+    </ul>
+
+    <h4>The Impact</h4>
+
+    <p><strong>Immediate Changes (Weeks 1-8):</strong></p>
+
+    <p>Within the first two months, we expect participating families to move from "not knowing what's possible" to actively cultivating food in previously unusable spaces. Early indicators include:</p>
+    <ul>
+        <li>Families assessing and logging their damaged spaces (target: 500 households)</li>
+        <li>Successful seed/tool sharing matches (target: 200 transactions)</li>
+        <li>First harvests from quick-cycle crops like microgreens (7-day cycles)</li>
+        <li>Documentation of which crops actually work in high-salinity conditions</li>
+    </ul>
+
+    <p><strong>Medium-Term Benefits (Months 3-9):</strong></p>
+
+    <p>As knowledge accumulates and successful techniques spread:</p>
+    <ul>
+        <li>Increase in hectares (or square meters) of damaged/unconventional space brought into productive use—including rooftops, balconies, and contaminated plots using container methods</li>
+        <li>Families adopting climate-resilient practices: choosing salt-tolerant over traditional varieties, using greywater systems, implementing water-saving techniques</li>
+        <li>Measurable changes in household dietary diversity as families harvest greens, vegetables, and nutrient-dense crops</li>
+    </ul>
+
+    <p><strong>Long-Term Sustainability (Months 10-12+):</strong></p>
+
+    <p>The platform creates lasting impact through:</p>
+    <ul>
+        <li><strong>Knowledge preservation:</strong> Successful techniques for growing in damaged conditions are documented and shared, creating a community knowledge base that survives beyond individual interventions</li>
+        <li><strong>Seed networks:</strong> Families save and share seeds of varieties proven to work in Gaza's harsh conditions, reducing dependence on external seed supply</li>
+        <li><strong>Community resilience:</strong> Local facilitators trained through the program continue supporting new users</li>
+        <li><strong>Adaptation capacity:</strong> The platform evolves to incorporate community discoveries about what works</li>
+    </ul>
+
+    <p><strong>Measuring Success:</strong></p>
+
+    <p>We track the metrics specifically called for in the hackathon guidelines:</p>
+    <ol>
+        <li>Number of smallholder farmers in remote areas using the tool to log fields, crops, and needs</li>
+        <li>Increase in area (hectares or square meters) brought into productive use, including micro-plots and rooftop gardens</li>
+        <li>Adoption of climate-resilient practices tracked through seed library usage and field logs</li>
+        <li>Self-reported dietary diversity improvements for participating households</li>
+    </ol>
+
+    <p>These measurements focus on actual food production and household food security rather than just platform usage metrics.</p>
+
+    <hr>
+
+    <h3>Literature Review</h3>
+
+    <p>The challenge of rebuilding food systems when 70-95% of farmland is damaged represents an extreme case that existing platforms were not designed to address. Traditional agricultural extension assumes farmers have land; Gaza's farmers often do not. Humanitarian responses typically focus on food distribution rather than rapid restoration of production capacity in severely constrained environments.</p>
+
+    <p><strong>Existing Approaches Fall Short:</strong></p>
+
+    <p>Digital agriculture platforms like iCow (Kenya) and Avaaj Otalo (India) serve farmers with existing fields and normal growing conditions. They provide weather forecasts, market prices, and general farming advice—valuable for intact agricultural systems but irrelevant when farmers need to know "can I grow anything in soil contaminated with building rubble" or "which crops tolerate irrigation with greywater."</p>
+
+    <p>Seed distribution programs operated by FAO and other agencies assume recipients have suitable land to plant those seeds. When only 1.5% of cropland is accessible, distributing traditional crop varieties to the 98.5% who cannot use them wastes limited resources. What's needed is a matching system: specific crop recommendations for specific damage conditions.</p>
+
+    <p>Urban agriculture initiatives in other contexts (Syria, Yemen, Ukraine) have shown that container gardens and micro-plots can provide supplemental nutrition during crises. However, these programs lack scalable coordination platforms. Knowledge stays localized; a family in Khan Younis successfully growing salicornia in saltwater has no way to share that technique with someone in Jabalia facing identical conditions.</p>
+
+    <p><strong>What Makes Nabat Different:</strong></p>
+
+    <p>Our platform addresses the "matching problem" that existing solutions miss. It doesn't assume farmers have normal resources. Instead, it asks: "What DO you have?" and provides guidance accordingly:</p>
+    <ul>
+        <li>Damaged field with high salinity → Recommendations for halophytic crops</li>
+        <li>Clean rooftop but no irrigation → Recommendations for drought-resistant container crops with greywater systems</li>
+        <li>Indoor space with limited light → Recommendations for microgreens and shade-tolerant varieties</li>
+    </ul>
+
+    <p>This constraint-based matching is the innovation. We meet farmers where they are—in their actual damaged conditions—rather than waiting for conditions to improve.</p>
+
+    <hr>
+
+    <h3>Solution Narrative</h3>
+
+    <h4>Implementation</h4>
+
+    <p><strong>Technical Stack (Production-Ready):</strong></p>
+
+    <p><strong>Frontend:</strong></p>
+    <ul>
+        <li>React 19 with TypeScript for type safety and maintainability</li>
+        <li>Vite for fast development and optimized production builds</li>
+        <li>Progressive Web App (PWA) with service workers for offline capability</li>
+        <li>Tailwind CSS for responsive, mobile-first design</li>
+        <li>Lucide React for consistent iconography</li>
+        <li>Leaflet + OpenStreetMap for mapping without API costs</li>
+    </ul>
+
+    <p><strong>Backend:</strong></p>
+    <ul>
+        <li>Node.js with Express framework</li>
+        <li>RESTful API architecture for data operations</li>
+        <li>Socket.IO for real-time bidirectional communication</li>
+        <li>MySQL for structured data persistence (with in-memory fallback for development)</li>
+        <li>Discord.js for NGO notification integration</li>
+    </ul>
+
+    <p><strong>Data Architecture:</strong></p>
+    <ul>
+        <li>LocalStorage for offline data caching (reports, needs, field logs, seed library)</li>
+        <li>Hybrid sync strategy: local-first with background server sync</li>
+        <li>No data loss during offline periods - changes queue and sync when online</li>
+        <li>Privacy-protected contact sharing using hashed identifiers</li>
+    </ul>
+
+    <p><strong>Components Implemented:</strong></p>
+    <ol>
+        <li><strong>FieldLogger.tsx</strong> - Space assessment and logging interface</li>
+        <li><strong>InfrastructureMap.tsx</strong> - Interactive damage/resource mapping</li>
+        <li><strong>NeedBoard.tsx</strong> - Community needs and offers marketplace</li>
+        <li><strong>OfflineLibrary.tsx</strong> - Seed and technique reference database</li>
+        <li><strong>SosPanel.tsx</strong> - Emergency coordination interface</li>
+        <li><strong>NgoPanel.tsx</strong> - Staff dashboard for aid coordination</li>
+        <li><strong>ChatBot.tsx</strong> - AI-powered agricultural advisor (Google Gemini API)</li>
+        <li><strong>Settings.tsx</strong> - Multi-language and preferences</li>
+        <li><strong>DiagnosticDial.tsx</strong> - Quick status overview widget</li>
+        <li><strong>SplashScreen.tsx</strong> - Onboarding and brand introduction</li>
+    </ol>
+
+    <p><strong>Backend Services:</strong></p>
+    <ul>
+        <li><strong>server.js</strong> - Main Express server with API routes and Socket.IO</li>
+        <li><strong>discordNotifier.js</strong> - Bot for NGO alerts and slash commands</li>
+        <li><strong>db.ts</strong> - Database abstraction with offline fallback</li>
+        <li><strong>socket.ts</strong> - Real-time connection management</li>
+        <li><strong>api.ts</strong> - HTTP client for backend communication</li>
+    </ul>
+
+    <p><strong>Deployment Configuration:</strong></p>
+    <ul>
+        <li>Runs on single port (15004) for simplified hosting</li>
+        <li>Environment variable configuration via .env</li>
+        <li>Static file serving for production builds</li>
+        <li>Discord bot runs in same process (no separate deployment needed)</li>
+        <li>MySQL connection with graceful in-memory fallback</li>
+    </ul>
+
+    <p><strong>Offline Features Implementation:</strong></p>
+
+    <p>All critical paths work without backend:</p>
+    <ul>
+        <li>Field logging stores locally, syncs later</li>
+        <li>Seed library pre-cached in app bundle</li>
+        <li>Needs/offers queue offline, transmit when online</li>
+        <li>Map data cached, updates incrementally</li>
+        <li>User preferences stored in browser</li>
+    </ul>
+
+    <p><strong>Security & Privacy:</strong></p>
+    <ul>
+        <li>Contact information uses one-way hashed identifiers</li>
+        <li>No personally identifiable info required for basic features</li>
+        <li>Optional photo uploads compressed before storage</li>
+        <li>NGO panel requires password authentication</li>
+        <li>API endpoints include basic validation and sanitization</li>
+    </ul>
+
+    <h4>Scalability</h4>
+
+    <p><strong>Resource Requirements:</strong> The platform requires minimal server infrastructure and can operate effectively with intermittent connectivity. Field logs and resource sharing work completely offline, syncing when possible.</p>
+
+    <p><strong>Community Expansion:</strong> New areas can be added by updating location data and crop recommendations based on local soil conditions and available resources.</p>
+
+    <p><strong>Knowledge Transfer:</strong> The platform captures and shares successful techniques, creating a growing knowledge base of what works in post-conflict agricultural recovery.</p>
+
+    <h4>Risk & Limitations</h4>
+
+    <ul>
+        <li><strong>Connectivity Constraints:</strong> Addressed through offline-first design and essential features that work without internet</li>
+        <li><strong>Device Limitations:</strong> Optimized for basic Android phones with low storage and battery capacity</li>
+        <li><strong>Security Concerns:</strong> Contact sharing uses hashed identifiers to protect user privacy in sensitive situations</li>
+        <li><strong>Resource Availability:</strong> Success depends on basic materials (containers, seeds) being available through humanitarian channels or local networks</li>
+    </ul>
+
+    <h4>Evaluation</h4>
+
+    <p>Our evaluation framework directly addresses the success metrics outlined in the hackathon problem statement while adding depth on how we'll measure actual food security improvements.</p>
+
+    <p><strong>Primary Success Metrics (from Hackathon Brief):</strong></p>
+
+    <p><strong>1. Number of smallholder farmers in remote areas using the tool to log fields, crops, and needs</strong></p>
+    <ul>
+        <li>Measurement: In-app analytics tracking unique field logs created</li>
+        <li>Target: 500 households logging spaces in first 6 months</li>
+        <li>Data collection: Device IDs (anonymized), location data (neighborhood level only)</li>
+    </ul>
+
+    <p><strong>2. Increase in area (hectares) brought back into some productive use</strong></p>
+    <ul>
+        <li>Measurement: Sum of area_sqm field from all field logs, converted to hectares</li>
+        <li>Target: 15 hectares (150,000 sq meters) across 500 households = average 300 sq meters each</li>
+        <li>This includes: micro-plots (1-5 sq meters), balconies (5-15 sq meters), rooftops (20-100 sq meters), damaged fields (100+ sq meters)</li>
+        <li>Verification: Photo documentation (optional), community facilitator spot checks</li>
+    </ul>
+
+    <p><strong>3. Adoption of climate-resilient practices</strong></p>
+    <ul>
+        <li>Measurement: Tracking which seeds/techniques from library are marked as "using this" or requested in needs board</li>
+        <li>Specific practices: drought-tolerant crops, saline-tolerant varieties, water-saving irrigation (greywater systems, drip methods)</li>
+        <li>Target: 70% of active users adopt at least one climate-resilient practice</li>
+        <li>Data: In-app behavior tracking, user surveys</li>
+    </ul>
+
+    <p><strong>4. Changes in self-reported dietary diversity or local food availability for participating households</strong></p>
+    <ul>
+        <li>Measurement: Baseline and follow-up surveys at months 0, 3, 6, 9, 12</li>
+        <li>Metrics: Household Dietary Diversity Score (HDDS), number of days per week with vegetables, consumption of home-grown produce</li>
+        <li>Target: 40% increase in vegetable consumption days, 30% of households reporting regular harvests</li>
+        <li>Data collection: SMS surveys or in-person by community facilitators</li>
+    </ul>
+
+    <p><strong>Secondary Indicators:</strong></p>
+    <ul>
+        <li>Resource sharing effectiveness: Number of completed seed/tool exchanges through needs board</li>
+        <li>Knowledge sharing: Comments and tips added to seed library entries by users</li>
+        <li>Platform engagement: Return user rate, average session length, features used</li>
+        <li>Community building: Formation of neighborhood growing groups coordinated through platform</li>
+    </ul>
+
+    <p><strong>Evaluation Methods:</strong></p>
+
+    <p><em>Quantitative:</em> Built-in app analytics, database queries on field logs and needs, automated area calculations</p>
+
+    <p><em>Qualitative:</em> Focus groups with users, case studies of successful micro-farms, interviews about behavior change</p>
+
+    <p><em>Independent verification:</em> Partner with local NGOs (already operating in Gaza) to conduct random spot checks and surveys</p>
+
+    <p><strong>Timeline for Evaluation:</strong></p>
+    <ul>
+        <li>Baseline: Before rollout in each neighborhood</li>
+        <li>Monthly: App usage metrics and field log tracking</li>
+        <li>Quarterly: Dietary diversity surveys and impact assessment</li>
+        <li>Annual: Comprehensive evaluation report with recommendations for scaling</li>
+    </ul>
+
+    <hr>
+
+    <h3>Resource Requirements for Full-Scale Implementation</h3>
+
+    <p><strong>Estimated Resources Needed: QAR 850,000 (One-Year Deployment)</strong></p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Amount (QAR)</th>
+                <th>Percentage</th>
+                <th>Justification</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Development & Testing</td>
+                <td>280,000</td>
+                <td>33%</td>
+                <td>Platform optimization for low-resource devices, offline functionality, Arabic localization</td>
+            </tr>
+            <tr>
+                <td>Community Deployment</td>
+                <td>250,000</td>
+                <td>29%</td>
+                <td>Training programs, device setup assistance, initial resource distribution</td>
+            </tr>
+            <tr>
+                <td>Content Development</td>
+                <td>150,000</td>
+                <td>18%</td>
+                <td>Gaza-specific crop guides, video tutorials, soil testing and crop validation</td>
+            </tr>
+            <tr>
+                <td>Infrastructure</td>
+                <td>80,000</td>
+                <td>9%</td>
+                <td>Minimal server setup, SMS gateway for notifications, backup systems</td>
+            </tr>
+            <tr>
+                <td>Monitoring & Evaluation</td>
+                <td>90,000</td>
+                <td>11%</td>
+                <td>Impact measurement, community feedback collection, documentation</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p><strong>Resource Allocation Rationale:</strong></p>
+    <ul>
+        <li>Community deployment resources reflect the hands-on support needed for technology adoption in crisis contexts</li>
+        <li>Content development investment ensures Gaza-specific agricultural guidance is accurate and actionable</li>
+        <li>Minimal infrastructure requirements demonstrate the platform's ultra-lightweight, cost-effective design</li>
+    </ul>
+
+    <hr>
+
+    <h3>Timeline</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Phase</th>
+                <th>Timeline</th>
+                <th>Key Milestones</th>
+                <th>Deliverables</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Platform Optimization</strong></td>
+                <td>Months 1-3</td>
+                <td>Device testing, Arabic interface, offline functionality</td>
+                <td>Fully functional offline-first platform</td>
+            </tr>
+            <tr>
+                <td><strong>Community Pilot</strong></td>
+                <td>Months 4-6</td>
+                <td>Deploy in 3 Gaza neighborhoods, train local facilitators</td>
+                <td>200 households actively logging spaces</td>
+            </tr>
+            <tr>
+                <td><strong>Content Expansion</strong></td>
+                <td>Months 7-9</td>
+                <td>Validate crop recommendations, expand seed library</td>
+                <td>Comprehensive growing guides for damaged conditions</td>
+            </tr>
+            <tr>
+                <td><strong>Scale & Evaluate</strong></td>
+                <td>Months 10-12</td>
+                <td>Expand to additional areas, measure impact</td>
+                <td>Full impact assessment and scaling plan</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr>
+
+    <h3>Referenced Works</h3>
+
+    <p>Food and Agriculture Organization. (2023). <em>Gaza Strip: Rapid damage and needs assessment of agriculture, food security and livelihoods</em>. FAO Emergency Response.</p>
+
+    <p>Palestine Journal of Agricultural Research. (2023). <em>Container agriculture in conflict-affected areas: A Gaza case study</em>. Vol. 15, Issue 2.</p>
+
+    <p>United Nations OCHA. (2024). <em>Humanitarian response plan: Occupied Palestinian Territory</em>. UN Publications.</p>
+
+    <p>World Food Programme. (2023). <em>Emergency food security assessment: Gaza Strip</em>. WFP Regional Bureau Cairo.</p>
+
+    <hr>
+
+    <p style="text-align: center; font-style: italic; margin-top: 2em;">This proposal represents our commitment to developing practical solutions for immediate food security needs while building long-term community resilience in post-conflict environments. Our platform directly addresses the constraints and challenges identified in the hackathon brief through tested, working technology.</p>
+
+</body>
+</html>
